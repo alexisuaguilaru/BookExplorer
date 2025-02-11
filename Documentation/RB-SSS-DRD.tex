@@ -70,8 +70,26 @@ None at present.
 
 \section{Specific requirements}
 \subsection{Capabilities Requirements}
+The system should be able to interact with the user so 
+that they can capture the type of stories they would 
+like to be read by using short text representative of 
+events or occurrences in the story to create a synopsis of their "ideal book".\\
+In addition, the system should provide a response in 
+the shortest possible time along with the most 
+appropriate recommendations.
 \subsection{System Interface Requirements}
+Two interfaces are required to obtain the data concerning 
+the books: one with the Open Library API and the other with 
+DeepSeek to generate synopses concerning the books. 
+Subsequently, one is required for communication with the 
+databases and the recommender system itself. And a last one 
+for the interaction with the user, for the capture of the 
+story to be created.
 \subsection{Adaptation and Missionization Requirements}
+The books obtained from Open Library are the only data 
+that could be radically altered or modified if the database 
+is completely removed. And adding new titles could also 
+create a disruption if it is a title with a new genre not previously recorded.
 \subsection{Computer Resource Requirements}
 \subsubsection{Computer Hardware Resource Requirements}
 \subsubsection{Computer Hardware Utilization Requirements}
