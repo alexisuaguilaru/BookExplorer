@@ -16,11 +16,11 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
         Yield a list of IDs and titles
     """
     for subject in Subjects:
-        books = GetTitlesBySubject(subject)
+        books = GetBooksBySubject(subject)
         yield ExtractDataBooks(books,AmountBooks)
         sleep(1.5)
 
-def GetTitlesBySubject(Subject:str) -> list[dict]:
+def GetBooksBySubject(Subject:str) -> list[dict]:
     """
         Function for getting data of books by subject
 
