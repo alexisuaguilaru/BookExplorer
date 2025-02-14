@@ -1,9 +1,24 @@
+from time import sleep
 import requests
 import json
 
+def GetBooksData(Subjects:list[str]) -> list[tuple[str,str]]:
+    """
+        Function for getting data of books from 
+        a list of subjects
+
+        -- Subjects : list[str] :: List of subjects 
+
+        Return a list of titles and IDs
+    """
+    for subject in Subjects:
+        books = GetTitlesBySubject(subject)
+        yield ExtractDataBooks(books)
+        sleep(1.5)
+
 def GetTitlesBySubject(Subject:str) -> list[dict]:
     """
-        Function to get data from books by subject
+        Function for getting data of books by subject
 
         -- Subject : str :: Subject of the books
 
