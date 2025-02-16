@@ -1,4 +1,3 @@
-from time import sleep
 import requests
 import json
 
@@ -16,15 +15,17 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
         Yield a list of IDs and titles
     """
     for subject in Subjects:
-        books = GetBooksBySubject(subject)
-        yield ExtractDataBooks(books,AmountBooks)
-        sleep(1.5)
+        books = GetTitlesBySubject(subject,AmountBooks)
+        yield ExtractDataBooks(books)
 
-def GetBooksBySubject(Subject:str) -> list[dict]:
+def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
         Function for getting data of books by subject
 
         -- Subject : str :: Subject of the books
+
+        -- AmountBooks : int :: Limit of books from which 
+        data is extracted
 
         Return a list of books with its data
     """
@@ -33,7 +34,8 @@ def GetBooksBySubject(Subject:str) -> list[dict]:
                       "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
                      }
     parameters_query = {
-                        "details":"false"
+                        "details":"false",
+                        "limit":AmountBooks
                        }
 
     response = requests.get(api_url_subject,params=parameters_query,headers=identification)
@@ -41,21 +43,17 @@ def GetBooksBySubject(Subject:str) -> list[dict]:
     
     return data['works']
 
-def ExtractDataBooks(Books:list[dict],AmountBooks:int) -> list[tuple[str,str]]:
+def ExtractDataBooks(Books:list[dict]) -> list[tuple[str,str]]:
     """
         Function for extracting essential data from books    
     
         -- Books : list[dict] :: List of books data 
 
-        -- AmountBooks : int :: Limit of books from which 
-        data is extracted
-
         Return a list of IDs and titles
     """
     ExtractedData = []
 
-    for index_book in range(min(len(Books),AmountBooks)):
-        book = Books[index_book]
+    for book in Books:
         ExtractedData.append((book['key'][7:],book['title']))
     
     return ExtractedData
