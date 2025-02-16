@@ -29,13 +29,13 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
 
         Return a list of books with its data
     """
-    api_url_subject = f"https://openlibrary.org/subjects/{Subject}.json"
+    api_url_subject = f'https://openlibrary.org/subjects/{Subject}.json'
     identification = {
-                      "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
+                      'User-Agent':'BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)'
                      }
     parameters_query = {
-                        "details":"false",
-                        "limit":AmountBooks
+                        'details':'false',
+                        'limit':AmountBooks
                        }
 
     response = requests.get(api_url_subject,params=parameters_query,headers=identification)
