@@ -11,3 +11,15 @@ Project under [MIT License](LICENSE)
 
 ## Introduction
 This project aims to create a solution to explore new titles based on the user's preferences, tastes and previously read books. 
+
+## Usage Instructions
+First it is necessary to clone this repository:
+```bash
+git clone https://github.com/alexisuaguilaru/BookExplorer.git
+```
+Next, build the container image using Docker and then run it:
+```bash
+docker build --tag book_explorer:0.1 .
+docker run --rm book_explorer:0.1
+```
+These commands will allow the execution of the data extractions test.
