@@ -20,6 +20,9 @@ git clone https://github.com/alexisuaguilaru/BookExplorer.git
 Next, build the container image using Docker and then run it:
 ```bash
 docker build --tag book_explorer:0.1 .
-docker run --rm book_explorer:0.1
 ```
-These commands will allow the execution of the data extractions test.
+Finally, for executing the book extraction examples, execute the following commands:
+```bash
+docker run --rm book_explorer:0.1 python DataExtraction/Example_BooksExtraction.py
+docker run --rm book_explorer:0.1 python DataExtraction/Example_RequestAllFields.py
+```
