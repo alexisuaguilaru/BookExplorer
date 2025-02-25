@@ -12,6 +12,9 @@ Project under [MIT License](LICENSE)
 ## Introduction
 This project aims to create a solution to explore new titles based on the user's preferences, tastes and previously read books. 
 
+## Methodology
+The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks.
+
 ## Usage Instructions
 First it is necessary to clone this repository:
 ```bash
