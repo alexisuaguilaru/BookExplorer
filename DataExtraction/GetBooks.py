@@ -14,8 +14,7 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
         Yield a list of books with their data
     """
     for subject in Subjects:
-        books = GetTitlesBySubject(subject,AmountBooks)
-        yield ExtractDataBooks(books)
+        yield GetTitlesBySubject(subject,AmountBooks)
 
 def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
@@ -41,18 +40,3 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
 
     response = requests.get(api_url_search,params=parameters_request,headers=identification)
     return response.json()['docs']
-
-def ExtractDataBooks(Books:list[dict]) -> list[tuple[str,str]]:
-    """
-        Function for extracting essential data from books    
-    
-        -- Books : list[dict] :: List of books data 
-
-        Return a list of IDs and titles
-    """
-    ExtractedData = []
-
-    for book in Books:
-        ExtractedData.append((book['key'][7:],book['title']))
-    
-    return ExtractedData
