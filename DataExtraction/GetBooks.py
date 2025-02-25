@@ -1,5 +1,4 @@
 import requests
-import json
 
 from typing import Iterable
 
@@ -12,11 +11,10 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
 
         -- AmountBooks : int :: Amount of books to get
 
-        Yield a list of IDs and titles
+        Yield a list of books with their data
     """
     for subject in Subjects:
-        books = GetTitlesBySubject(subject,AmountBooks)
-        yield ExtractDataBooks(books)
+        yield GetTitlesBySubject(subject,AmountBooks)
 
 def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
@@ -27,33 +25,18 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
         -- AmountBooks : int :: Limit of books from which 
         data is extracted
 
-        Return a list of books with its data
+        Return a list of books with their data
     """
-    api_url_subject = f'https://openlibrary.org/subjects/{Subject}.json'
+    api_url_search = "https://openlibrary.org/search.json?fields=key,title,author_name,subject,isbn,publish_date,publish_place,publisher"
     identification = {
-                      'User-Agent':'BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)'
+                      "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
                      }
-    parameters_query = {
-                        'details':'false',
-                        'limit':AmountBooks
+    parameters_request = {
+                        "q":Subject,
+                        "lang":"eng",
+                        "limit":AmountBooks,
+                        "sort":"rating",
                        }
 
-    response = requests.get(api_url_subject,params=parameters_query,headers=identification)
-    data = json.loads(response.text)
-    
-    return data['works']
-
-def ExtractDataBooks(Books:list[dict]) -> list[tuple[str,str]]:
-    """
-        Function for extracting essential data from books    
-    
-        -- Books : list[dict] :: List of books data 
-
-        Return a list of IDs and titles
-    """
-    ExtractedData = []
-
-    for book in Books:
-        ExtractedData.append((book['key'][7:],book['title']))
-    
-    return ExtractedData
+    response = requests.get(api_url_search,params=parameters_request,headers=identification)
+    return response.json()['docs']
