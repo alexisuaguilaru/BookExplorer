@@ -1,4 +1,5 @@
 import requests
+from random import choice
 
 if __name__ == "__main__":
     # Setting API
@@ -20,11 +21,16 @@ if __name__ == "__main__":
     print(*all_fields,sep=',\t',end='\n'*2)
 
     # Setting GET response
+    ExamplesSubjects = ['fiction','fantasy','historical_fiction',
+                        'horror','humor','literature','magic',
+                        'mystery_and_detective_stories','plays',
+                        'poetry','romance','science_fiction',
+                        'short_stories','thriller','young_adult_fiction']
     identification = {
                       "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
                      }
     parameters_request = {
-                        "q":"fiction",
+                        "q":choice(ExamplesSubjects),
                         "lang":"eng",
                         "limit":1,
                         "sort":"rating",
