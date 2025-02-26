@@ -14,10 +14,13 @@ As there is an enormous amount of titles, it becomes overwhelming how to find ne
 
 For capturing these preferences and previous readings (titles read), what is done is to show the user three different books to choose from, avoiding overloading the user with information and details of the books.
 
+## General Aim
+Develop a book recommendation system that is intuitive and simple to use for the user, with which suggestions are adjusted based on their preferences, specifically, by the books whose covers and titles caught their attention. In order to create an alternative solution to the question of what to read by simulating going to a bookstore and choosing a book only by reading its title and seeing its cover.
+
 ## Methodology
 The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks.
 
-## Usage Instructions
+## Installation and Usage Instructions
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
