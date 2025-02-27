@@ -1,6 +1,25 @@
 import requests
 
-from typing import Iterable
+from CleanBooks import CleanDataBook
+
+from typing import Iterable , Any
+
+def GetBooks(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
+    """
+        Function for obtaining clean books from a 
+        subject list.
+        
+        -- Subjects : list[str] :: List of subjects
+
+        -- AmountBooks : int :: Amount of books to get
+
+        Yield a book 
+    """
+    for batch_books in GetBooksData(Subjects,AmountBooks):
+        for book in batch_books:
+            if len(book['isbn']) != 0:
+                CleanDataBook(book)
+                yield book
 
 def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,str]]]:
     """
