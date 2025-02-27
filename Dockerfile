@@ -7,4 +7,4 @@ COPY --chmod=700 requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chmod=700 ./DataExtraction /app/DataExtraction
+COPY --chmod=700 ./DataExtraction ./DataExtraction
