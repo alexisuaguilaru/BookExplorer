@@ -1,4 +1,4 @@
-from GetBooks import GetBooksData
+from GetBooks import GetBooks
 
 from random import sample , randint
 
@@ -14,9 +14,9 @@ if __name__ == '__main__':
     ExampleFields = ["key","title","author_name","subject","isbn","publish_date","publish_place","publisher"]
 
     # Getting books data 
-    for subject , data_books in zip(subjects,GetBooksData(subjects,AmountBooks)):
+    for subject in subjects:
         print(f'\n{subject.upper().center(40,'-')}\n')
         fields = sample(ExampleFields,2)
         print(('-'*10).join(fields).center(40,'-'))
-        for index_book ,data_book in enumerate(data_books):
-            print(f'{index_book}\t{data_book[fields[0]]}\t{data_book[fields[1]]}')
+        for index_book ,data_book in enumerate(GetBooks([subject],AmountBooks)):
+            print(f'{index_book}\t{data_book[fields[0]]}\t\t{data_book[fields[1]]}')
