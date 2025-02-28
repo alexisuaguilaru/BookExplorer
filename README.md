@@ -31,6 +31,6 @@ docker build --tag book_explorer:0.1 .
 ```
 Finally, for executing the book extraction examples, execute the following commands:
 ```bash
-docker run --rm book_explorer:0.1 python DataExtraction/Example_BooksExtraction.py
-docker run --rm book_explorer:0.1 python DataExtraction/Example_RequestAllFields.py
+docker run --rm book_explorer:0.1 python -m DataProcessing.Examples.Example_BooksExtraction
+docker run --rm book_explorer:0.1 python -m DataProcessing.Examples.Example_RequestAllFields
 ```
