@@ -14,7 +14,7 @@ if __name__ == "__main__":
                 'poetry','romance','science_fiction',
                 'short_stories','thriller','young_adult_fiction']
     
-    for book in GetBook(subjects,10):
+    for book in GetBook(subjects,int(os.getenv("AMOUNT_BOOKS"))):
         BooksCollection.insert_one(book)
 
     ClientDatabase.close()
