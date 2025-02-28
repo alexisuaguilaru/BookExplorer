@@ -1,4 +1,4 @@
-from GetBooks import GetBooks
+from DataProcessing import GetBook
 
 from random import sample , randint
 
@@ -18,5 +18,5 @@ if __name__ == '__main__':
         print(f'\n{subject.upper().center(40,'-')}\n')
         fields = sample(ExampleFields,2)
         print(('-'*10).join(fields).center(40,'-'))
-        for index_book ,data_book in enumerate(GetBooks([subject],AmountBooks)):
+        for index_book ,data_book in enumerate(GetBook([subject],AmountBooks)):
             print(f'{index_book}\t{data_book[fields[0]]}\t\t{data_book[fields[1]]}')
