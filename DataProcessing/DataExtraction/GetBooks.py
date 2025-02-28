@@ -4,6 +4,7 @@ from .CleanBooks import CleanDataBook
 
 from typing import Iterable , Any
 
+Fields = ['key','title','author_name','subject','isbn','publish_date','publish_place','publisher']
 def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
     """
         Function for obtaining clean books from a 
@@ -17,7 +18,7 @@ def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
     """
     for batch_books in GetBooksData(Subjects,AmountBooks):
         for book in batch_books:
-            if len(book['isbn']) != 0:
+            if all(map(lambda field: book.get(field,False),Fields)):
                 CleanDataBook(book)
                 yield book
 
@@ -46,7 +47,7 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
 
         Return a list of books with their data
     """
-    api_url_search = "https://openlibrary.org/search.json?fields=key,title,author_name,subject,isbn,publish_date,publish_place,publisher"
+    api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
     identification = {
                       "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
                      }
