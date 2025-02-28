@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+    BooksDatabase:
+        image: mongo:7.0
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: 1234
+
+    PythonBackend:
+        build: 
+            dockerfile: Dockerfile_PythonBackend
+        image: book_explorer:0.1
+        depends_on:
+            - BooksDatabase
+        command: python -m DataProcessing.DataInsertion.InsertBooks
