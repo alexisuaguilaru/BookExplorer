@@ -1,10 +1,10 @@
 import requests
 
-from CleanBooks import CleanDataBook
+from .CleanBooks import CleanDataBook
 
 from typing import Iterable , Any
 
-def GetBooks(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
+def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
     """
         Function for obtaining clean books from a 
         subject list.
