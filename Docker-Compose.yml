@@ -1,0 +1,34 @@
+services:
+    BooksDatabase:
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        image: mongo:7.0
+        ports:
+            - "27017:27017"
+        networks:
+            - backend
+        healthcheck:
+            test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+            interval: 2s
+            timeout: 2s
+            retries: 10
+
+    PythonBackend:
+        environment:
+            AMOUNT_BOOKS: ${AMOUNT_BOOKS}
+            MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
+            DB_NAME: ${DB_NAME}
+        build: 
+            dockerfile: Dockerfile_PythonBackend
+        image: book_explorer:0.1
+        depends_on:
+            BooksDatabase:
+                condition: service_healthy
+        command: python -m DataProcessing.DataInsertion.InsertBooks
+        networks:
+            - backend
+
+networks:
+  backend:
+    driver: bridge
