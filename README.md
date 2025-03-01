@@ -20,17 +20,33 @@ Develop a book recommendation system that is intuitive and simple to use for the
 ## Methodology
 The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks.
 
+The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira]().
+
 ## Installation and Usage Instructions
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
-Next, build the container image using Docker and then run it:
+Next, build and run the multi-container image using Docker Compose:
 ```bash
-docker build --tag book_explorer:0.1 .
+docker-compose -p books-explorer --env-file .env_example up -d --build
 ```
-Finally, for executing the book extraction examples, execute the following commands:
-```bash
-docker run --rm book_explorer:0.1 python -m DataProcessing.Examples.Example_BooksExtraction
-docker run --rm book_explorer:0.1 python -m DataProcessing.Examples.Example_RequestAllFields
-```
+### Examples
+Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
+* Example to See all Available Fields (Categories)
+    ```bash
+    docker-compose -p books-explorer start PythonBackend
+    docker-compose -p books-explorer exec PythonBackend python -m DataProcessing.Examples.Example_RequestAllFields
+    ```
+
+* Example of Books Extraction
+    ```bash
+    docker-compose -p books-explorer start PythonBackend
+    docker-compose -p books-explorer exec PythonBackend python -m DataProcessing.Examples.Example_BooksExtraction
+    ```
+
+* Example of Query of Three Random Books
+    ```bash
+    docker-compose -p books-explorer start PythonBackend
+    docker-compose -p books-explorer exec --env .env_example PythonBackend python DataProcessing/Examples/Example_Random3Books.py
+    ```
