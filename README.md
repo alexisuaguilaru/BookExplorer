@@ -31,6 +31,10 @@ Next, build and run the multi-container image using Docker Compose:
 ```bash
 docker-compose -p books-explorer --env-file .env_example up -d --build
 ```
+And finally, to view the web interface just open the following link:
+```bash
+http://localhost:5000
+```
 ### Examples
 Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
 * Example to See all Available Fields (Categories)
