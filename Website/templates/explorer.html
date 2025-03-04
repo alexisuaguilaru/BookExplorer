@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<body>
+    <a href="/"><h1>Book Explorer</h1></a>
+    <form method="POST" action="/explorer">
+        <div class="book-container">
+            {% for book in QueryBooks %}
+            <div class="book-card">
+                <h3>{{ book.title }}</h3>
+                <p><b>Authors</b>: {{ book.author_name }}</p>
+                <p><b>publisher</b>: {{ book.publisher }}</p>
+                <p><b>ISBN</b>: {{ book.isbn }}</p>
+                <p><b>Subjects</b>: {{ book.subject }}</p>
+                <button type="submit" name="book_isbn" value="{{ book.isbn }}">
+                    Selection
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+</body>
