@@ -29,7 +29,7 @@ git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
 Next, build and run the multi-container image using Docker Compose:
 ```bash
-docker-compose -p books-explorer --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Docker-Compose.yml --env-file .env_example up -d --build
 ```
 And finally, to view the web interface just open the following link:
 ```bash

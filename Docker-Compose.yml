@@ -20,7 +20,8 @@ services:
             AMOUNT_BOOKS: ${AMOUNT_BOOKS}
             MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
             DB_NAME: ${DB_NAME}
-        build: 
+        build:
+            context: .
             dockerfile: Dockerfile_PythonBackend
         image: backend:0.2
         networks:
@@ -36,6 +37,7 @@ services:
             MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
             DB_NAME: ${DB_NAME}
         build:
+            context: .
             dockerfile: Dockerfile_PythonFrontend
         image: frontend:0.2
         volumes:
