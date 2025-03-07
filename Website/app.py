@@ -30,10 +30,10 @@ def update_explorer():
             selected_books.append(book_isbn)
             return redirect(url_for('show_recommendations'))
 
-#@app.route('/recommendations')
-#def show_recommendations():
-#    recommended_books = GetRandomBooks() + GetRandomBooks()[:2]
-#    return render_template('recommendations.html',Recommendations=recommended_books)
+@app.route('/recommendations')
+def show_recommendations():
+    recommended_books = GetRandomBooks() + GetRandomBooks()[:2]
+    return render_template('recommendations.html',Recommendations=recommended_books)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000,debug=bool(os.getenv("DEBUG_MODE")))
