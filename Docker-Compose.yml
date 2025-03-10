@@ -33,6 +33,7 @@ services:
 
     PythonFrontend:
         environment:
+            FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
             DEBUG_MODE: ${DEBUG_MODE}
             MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
             DB_NAME: ${DB_NAME}
