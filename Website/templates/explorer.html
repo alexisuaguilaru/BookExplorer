@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<html>
 <body>
     <a href="/"><h1>Book Explorer</h1></a>
+    <a href="/reset-selection">Start Again</a>
     <form method="POST" action="/explorer">
         <div class="book-container">
             {% for book in QueryBooks %}
@@ -16,4 +18,6 @@
             </div>
             {% endfor %}
         </div>
+    </form>
 </body>
+</html>

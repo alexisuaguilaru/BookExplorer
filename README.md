@@ -1,10 +1,12 @@
 # BookExplorer
 
 ## Abstract
-Recommender system based on user preferences to explore new titles.
+Recommendation system based on user preferences to explore new titles using similarities between books.
 
 ## Author and Contact
-Alexis Aguilar [Student of Bachelor's Degree in "Tecnologías para la Información en Ciencias" at Universidad Nacional Autónoma de México [UNAM](https://www.unam.mx/)]: alexis.uaguilaru@gmail.com 
+Alexis Aguilar [Student of Bachelor's Degree in "Tecnologías para la Información en Ciencias" at Universidad Nacional Autónoma de México [UNAM](https://www.unam.mx/)]: alexis.uaguilaru@gmail.com
+
+Project developed for the subject “Distributed Computing” for the class taught in semester 2025-2.
 
 ## License
 Project under [MIT License](LICENSE)
@@ -14,8 +16,15 @@ As there is an enormous amount of titles, it becomes overwhelming how to find ne
 
 For capturing these preferences and previous readings (titles read), what is done is to show the user three different books to choose from, avoiding overloading the user with information and details of the books.
 
+## Justification
+The development of this project solves a constant problem among readers, which is the question of which book to read. Therefore, giving different book options to the users could facilitate the resolution of the next reading for each reader. Because of the latter, it becomes the main reason for the development of this solution making use of the reader's own preferences.
+
 ## General Aim
 Develop a book recommendation system that is intuitive and simple to use for the user, with which suggestions are adjusted based on their preferences, specifically, by the books whose covers and titles caught their attention. In order to create an alternative solution to the question of what to read by simulating going to a bookstore and choosing a book only by reading its title and seeing its cover.
+
+## Particular Aims
+- Making use of technologies such as containers (Docker), APIs and Machine Learning to develop the book recommender.
+- Service the recommender system through a web interface with the user, deployed on a server hosted in the cloud.
 
 ## Methodology
 The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks.
