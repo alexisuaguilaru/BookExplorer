@@ -30,6 +30,12 @@ def update_explorer():
     query_books = GetRandomBooks()
     return render_template('explorer.html',QueryBooks=query_books)
 
+@app.route('/reset-selection')
+def reset_selection():
+    session['selected_books'] = [] 
+    session['selections'] = 0      
+    return redirect(url_for('update_explorer')) 
+
 @app.route('/recommendations')
 def show_recommendations():
     recommended_books = GetRandomBooks() + GetRandomBooks()[:2]
