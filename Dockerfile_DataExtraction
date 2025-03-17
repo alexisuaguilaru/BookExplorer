@@ -2,8 +2,8 @@ FROM python:3.12.5-alpine
 
 WORKDIR /app
 
-COPY --chmod=700 requirements_backend.txt .
+COPY --chmod=700 requirements_DataExtraction.txt .
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements_backend.txt
+RUN pip install --no-cache-dir -r requirements_DataExtraction.txt
 
 COPY --chmod=700 ./DataProcessing ./DataProcessing
