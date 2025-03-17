@@ -20,11 +20,26 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_DataExtraction
-        image: backend:0.2
+        image: data-extraction:0.2
         depends_on:
             BooksDatabase:
                 condition: service_healthy
         command: python -m DataProcessing.DataInsertion.InsertBooks
+
+    RecommenderSystem:
+        environment:
+            MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
+            DB_NAME: ${DB_NAME}
+        build:
+            context: .
+            dockerfile: Dockerfile_RecommenderSystem
+        image: recommend-system:0.3
+        depends_on:
+            BooksDatabase:
+                condition: service_healthy
+            DataExtraction:
+                condition: service_completed_successfully
+        command: sh -c "sleep 30 && python -m RecommenderSystem.Preprocessing.InsertSimilarities"
 
     WebInterface:
         environment:
@@ -35,7 +50,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_WebInterface
-        image: frontend:0.2
+        image: web-interface:0.2
         volumes:
             - ./Website:/Website
         ports:

@@ -13,6 +13,5 @@ if __name__ == "__main__":
     DataBooks = list(BooksCollection.find({}))
 
     TermFrequency_InverseDocumentFrecuency = GetTermFrequencyMatrix(DataBooks)
-    print(TermFrequency_InverseDocumentFrecuency)
 
     ClientDatabase.close()
