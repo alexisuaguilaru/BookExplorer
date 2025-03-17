@@ -4,9 +4,6 @@ services:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
         image: mongo:7.0
-        networks:
-            - backend
-            - frontend
         ports:
             - "27017:27017"
         healthcheck:
@@ -15,23 +12,21 @@ services:
             timeout: 2s
             retries: 10
 
-    PythonBackend:
+    DataExtraction:
         environment:
             AMOUNT_BOOKS: ${AMOUNT_BOOKS}
             MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
             DB_NAME: ${DB_NAME}
         build:
             context: .
-            dockerfile: Dockerfile_PythonBackend
+            dockerfile: Dockerfile_DataExtraction
         image: backend:0.2
-        networks:
-            - backend
         depends_on:
             BooksDatabase:
                 condition: service_healthy
         command: python -m DataProcessing.DataInsertion.InsertBooks
 
-    PythonFrontend:
+    WebInterface:
         environment:
             FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
             DEBUG_MODE: ${DEBUG_MODE}
@@ -39,19 +34,11 @@ services:
             DB_NAME: ${DB_NAME}
         build:
             context: .
-            dockerfile: Dockerfile_PythonFrontend
+            dockerfile: Dockerfile_WebInterface
         image: frontend:0.2
         volumes:
             - ./Website:/Website
-        networks:
-            - frontend
         ports:
             - "5000:5000"
         depends_on:
-            - PythonBackend
-
-networks:
-    backend:
-        driver: bridge
-    frontend:
-        driver: bridge
+            - DataExtraction
