@@ -23,13 +23,16 @@ The development of this project solves a constant problem among readers, which i
 Develop a book recommendation system that is intuitive and simple to use for the user, with which suggestions are adjusted based on their preferences, specifically, by the books whose covers and titles caught their attention. In order to create an alternative solution to the question of what to read by simulating going to a bookstore and choosing a book only by reading its title and seeing its cover.
 
 ## Particular Aims
+- Making book recommendations that allow users to explore new genres based on their selections and preferences.
 - Making use of technologies such as containers (Docker), APIs and Machine Learning to develop the book recommender.
 - Service the recommender system through a web interface with the user, deployed on a server hosted in the cloud.
 
 ## Methodology
-The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks.
+The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks. The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira]().
 
-The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira]().
+First, the books obtained through the [OpenLibrary API]() were processed, from which only the fields of interest for the project (author, title, ISBN, genres, place and date of publication, publisher) were stored. The processed books were stored in MongoDB, to later represent the genres of each book in a numerical vector, which were used to determine the similarity between books; the latter being the basis of the books that are recommended through this service.
+
+For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface will be implemented in Django to preserve greater security and isolation with the backend of the web service.
 
 ## Installation and Usage Instructions
 First it is necessary to clone this repository:
@@ -63,3 +66,15 @@ Because the Python container related to the backend stops, it is necessary to fi
     docker-compose -p books-explorer start PythonBackend
     docker-compose -p books-explorer exec --env .env_example PythonBackend python DataProcessing/Examples/Example_Random3Books.py
     ```
+
+## Technologies
+* APIs
+* Python
+  * Flask
+  * Scikit Learn
+  * Django
+* MongoDB
+* Docker
+  * Docker Compose
+* AWS
+  * EC2
