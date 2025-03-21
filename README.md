@@ -30,7 +30,7 @@ Develop a book recommendation system that is intuitive and simple to use for the
 ## Methodology
 The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks. The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira]().
 
-First, the books obtained through the [OpenLibrary API](https://openlibrary.org) were processed, from which only the fields of interest for the project (author, title, ISBN, genres, place and date of publication, publisher) were stored. The processed books were stored in MongoDB, to later represent the genres of each book in a numerical vector, which were used to determine the similarity between books; the latter being the basis of the books that are recommended through this service.
+First, the books obtained through the [OpenLibrary API]() were processed, from which only the fields of interest for the project (author, title, ISBN, genres, place and date of publication, publisher) were stored. The processed books were stored in MongoDB, to later represent the genres of each book in a numerical vector, which were used to determine the similarity between books; the latter being the basis of the books that are recommended through this service.
 
 For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface will be implemented in Django to preserve greater security and isolation with the backend of the web service.
 
