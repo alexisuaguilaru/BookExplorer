@@ -59,4 +59,8 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
                        }
 
     response = requests.get(api_url_search,params=parameters_request,headers=identification)
-    return response.json()['docs']
+
+    if response.status_code == 200:
+        return response.json()['docs']
+    else:
+        return []

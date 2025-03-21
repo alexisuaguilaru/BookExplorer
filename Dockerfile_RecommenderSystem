@@ -1,0 +1,9 @@
+FROM python:3.12.5-alpine
+
+WORKDIR /RecommenderSystem
+
+COPY --chmod=700 requirements_RecommenderSystem.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements_RecommenderSystem.txt
+
+# COPY --chmod=700 ./RecommenderSystem ./RecommenderSystem
