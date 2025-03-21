@@ -20,11 +20,11 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_DataExtraction
-        image: data-extraction:0.2
+        image: data-extraction
         depends_on:
             BooksDatabase:
                 condition: service_healthy
-        command: python -m DataProcessing.DataInsertion.InsertBooks
+        command: sh -c "python -m DataProcessing.DataInsertion.InsertBooks && python -m DataProcessing.DataPreprocessing.InsertSimilarities"
 
     RecommenderSystem:
         environment:
@@ -33,13 +33,17 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_RecommenderSystem
-        image: recommend-system:0.3
+        image: recommend-system
+        volumes:
+            - ./RecommenderSystem:/RecommenderSystem
+        ports:
+            - "8013:8013"
         depends_on:
             BooksDatabase:
                 condition: service_healthy
             DataExtraction:
                 condition: service_completed_successfully
-        command: sh -c "sleep 30 && python -m RecommenderSystem.Preprocessing.InsertSimilarities"
+        command: sh -c "sleep 15 && python app.py"
 
     WebInterface:
         environment:
@@ -50,7 +54,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile_WebInterface
-        image: web-interface:0.2
+        image: web-interface
         volumes:
             - ./Website:/Website
         ports:
