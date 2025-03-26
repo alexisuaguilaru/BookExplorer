@@ -44,20 +44,3 @@ services:
             DataExtraction:
                 condition: service_completed_successfully
         command: sh -c "sleep 15 && python app.py"
-
-    WebInterface:
-        environment:
-            FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
-            DEBUG_MODE: ${DEBUG_MODE}
-            MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
-            DB_NAME: ${DB_NAME}
-        build:
-            context: .
-            dockerfile: Dockerfile_WebInterface
-        image: web-interface
-        volumes:
-            - ./Website:/Website
-        ports:
-            - "5000:5000"
-        depends_on:
-            - DataExtraction
