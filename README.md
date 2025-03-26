@@ -39,32 +39,43 @@ First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
-Next, build and run the multi-container image using Docker Compose:
+Next, build and run the multi-container for backend (database, interface-API) using Docker Compose:
 ```bash
-docker-compose -p books-explorer --file Docker-Compose.yml --env-file .env_example up -d --build
-```
-And finally, to view the web interface just open the following link:
-```bash
-http://localhost:5000
+docker-compose -p books-explorer-backend --file Compose-Backend.yml --env-file .env_example up -d --build
 ```
 ### Examples
 Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
 * Example to See all Available Fields (Categories)
     ```bash
-    docker-compose -p books-explorer start PythonBackend
-    docker-compose -p books-explorer exec PythonBackend python -m DataProcessing.Examples.Example_RequestAllFields
+    docker-compose -p books-explorer-backend start DataExtraction
+    docker-compose -p books-explorer-backend exec DataExtraction python -m DataProcessing.Examples.Example_RequestAllFields
     ```
 
 * Example of Books Extraction
     ```bash
-    docker-compose -p books-explorer start PythonBackend
-    docker-compose -p books-explorer exec PythonBackend python -m DataProcessing.Examples.Example_BooksExtraction
+    docker-compose -p books-explorer-backend start DataExtraction
+    docker-compose -p books-explorer-backend exec DataExtraction python -m DataProcessing.Examples.Example_BooksExtraction
     ```
 
 * Example of Query of Three Random Books
     ```bash
-    docker-compose -p books-explorer start PythonBackend
-    docker-compose -p books-explorer exec --env .env_example PythonBackend python DataProcessing/Examples/Example_Random3Books.py
+    docker-compose -p books-explorer-backend start DataExtraction
+    docker-compose -p books-explorer-backend exec --env .env_example DataExtraction python DataProcessing/Examples/Example_Random3Books.py
+    ```
+
+* Example of Random Recommendations using Recommender System API:
+    ```bash
+    http://127.0.0.1:8013/recommendations
+    ```
+  
+* Example of Recommendations based on a Book using Recommender System API:
+    ```bash
+    http://127.0.0.1:8013/recommendations?isbn=9780905712604
+    ```
+
+* Example of Get Information of a Book using Recommender System API:
+    ```
+    http://127.0.0.1:8013/information_book?isbn=9781432896935
     ```
 
 ## Technologies
