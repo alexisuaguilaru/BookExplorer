@@ -1,9 +1,7 @@
 FROM python:3.12.5-alpine
 
-WORKDIR /Website
+WORKDIR /WebInterface
 
 COPY --chmod=700 requirements_WebInterface.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements_WebInterface.txt
-
-CMD ["python","app.py"]
