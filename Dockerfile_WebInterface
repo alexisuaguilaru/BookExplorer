@@ -5,3 +5,5 @@ WORKDIR /WebInterface
 COPY --chmod=700 requirements_WebInterface.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements_WebInterface.txt
+
+# COPY --chmod=700 ./WebInterface .
