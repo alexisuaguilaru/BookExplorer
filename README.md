@@ -41,26 +41,27 @@ git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
 Next, build and run the multi-container for backend (database, interface-API) using Docker Compose:
 ```bash
-docker-compose -p books-explorer-backend --file Compose-Backend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose-Backend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose-Frontend.yml --env-file .env_example up -d --build
 ```
 ### Examples
 Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
 * Example to See all Available Fields (Categories)
     ```bash
-    docker-compose -p books-explorer-backend start DataExtraction
-    docker-compose -p books-explorer-backend exec DataExtraction python -m DataProcessing.Examples.Example_RequestAllFields
+    docker-compose -p books-explorer start DataExtraction
+    docker-compose -p books-explorer exec DataExtraction python -m DataProcessing.Examples.Example_RequestAllFields
     ```
 
 * Example of Books Extraction
     ```bash
-    docker-compose -p books-explorer-backend start DataExtraction
-    docker-compose -p books-explorer-backend exec DataExtraction python -m DataProcessing.Examples.Example_BooksExtraction
+    docker-compose -p books-explorer start DataExtraction
+    docker-compose -p books-explorer exec DataExtraction python -m DataProcessing.Examples.Example_BooksExtraction
     ```
 
 * Example of Query of Three Random Books
     ```bash
-    docker-compose -p books-explorer-backend start DataExtraction
-    docker-compose -p books-explorer-backend exec --env .env_example DataExtraction python DataProcessing/Examples/Example_Random3Books.py
+    docker-compose -p books-explorer start DataExtraction
+    docker-compose -p books-explorer exec --env .env_example DataExtraction python DataProcessing/Examples/Example_Random3Books.py
     ```
 
 * Example of Random Recommendations using Recommender System API:
