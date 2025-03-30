@@ -28,21 +28,29 @@ Develop a book recommendation system that is intuitive and simple to use for the
 - Service the recommender system through a web interface with the user, deployed on a server hosted in the cloud.
 
 ## Methodology
-The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks. The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira]().
+The Extreme Programming (XP) methodology was used for this project, with development cycles of 1 to 2 weeks. The progress tracking of this methodology is found in the closed issues and pull requests labeled with the code of each activity and cycle found in the project's [Jira](https://alexisuaguilaru.atlassian.net/jira/software/projects/SCRUM/boards/1/timeline?epic=COMPLETE6M&selectedIssue=SCRUM-40&shared=&atlOrigin=eyJpIjoiNGZiYmNkZTZmMzA0NDVkMTgzZTZjNGU5ZjkzZWZhNzAiLCJwIjoiaiJ9).
 
-First, the books obtained through the [OpenLibrary API]() were processed, from which only the fields of interest for the project (author, title, ISBN, genres, place and date of publication, publisher) were stored. The processed books were stored in MongoDB, to later represent the genres of each book in a numerical vector, which were used to determine the similarity between books; the latter being the basis of the books that are recommended through this service.
+First, the books obtained through the [OpenLibrary API](https://openlibrary.org/developers) were processed, from which only the fields of interest for the project (author, title, ISBN, genres, place and date of publication, publisher) were stored. The processed books were stored in MongoDB, to later represent the genres of each book in a numerical vector, which were used to determine the similarity between books; the latter being the basis of the books that are recommended through this service.
 
-For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface will be implemented in Django to preserve greater security and isolation with the backend of the web service.
+For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface was implemented in Flask to preserve greater security and isolation with the backend of the web service.
 
 ## Installation and Usage Instructions
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
-Next, build and run the multi-container for backend (database, interface-API) using Docker Compose:
+Next, build and run the multi-container for backend (database, interface-API) and frontend (web interface) using Docker Compose:
 ```bash
 docker-compose -p books-explorer --file Compose-Backend.yml --env-file .env_example up -d --build
 docker-compose -p books-explorer --file Compose-Frontend.yml --env-file .env_example up -d --build
+```
+And finally, for interacting with the web interface go to:
+```bash
+http://127.0.0.1:5000
+```
+For stopping the service, use this command:
+```bash
+docker-compose -p books-explorer down
 ```
 ### Examples
 Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
@@ -84,7 +92,6 @@ Because the Python container related to the backend stops, it is necessary to fi
 * Python
   * Flask
   * Scikit Learn
-  * Django
 * MongoDB
 * Docker
   * Docker Compose
