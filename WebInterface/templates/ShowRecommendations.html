@@ -1,0 +1,10 @@
+{% extends "__Base.html" %}
+
+{% block main %}
+        {% for recommended_book in Recommendations %}
+        <div>
+            <h3>{{ recommended_book.title }}</h3>
+            <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
+        </div>
+        {% endfor %}
+{% endblock %}

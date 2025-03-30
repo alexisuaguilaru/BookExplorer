@@ -1,0 +1,14 @@
+services:
+  WebInterface:
+        environment:
+            FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+            DEBUG_MODE: ${DEBUG_MODE}
+        build:
+            context: .
+            dockerfile: ./Dockerfiles/Dockerfile_WebInterface
+        image: web-interface
+        volumes:
+            - ./WebInterface:/WebInterface
+        ports:
+            - "5000:5000"
+        command: python app.py

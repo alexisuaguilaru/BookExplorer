@@ -1,0 +1,16 @@
+{% extends "__Base.html" %}
+
+{% block main %}
+    <form method="POST" action="/BookExplorer">
+        {% for recommended_book in Recommendations %}
+        <div>
+            <h3>{{ recommended_book.title }}</h3>
+            <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
+            <p><b>ISBN</b>: {{ recommended_book.isbn }}</p>
+            <button type="submit" name="book_isbn" value="{{ recommended_book.isbn }}">
+                Select
+            </button>
+        </div>
+        {% endfor %}
+    </form>
+{% endblock %}
