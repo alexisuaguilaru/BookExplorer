@@ -19,7 +19,7 @@ services:
             DB_NAME: ${DB_NAME}
         build:
             context: .
-            dockerfile: Dockerfile_DataExtraction
+            dockerfile: ./Dockerfiles/Dockerfile_DataExtraction
         image: data-extraction
         depends_on:
             BooksDatabase:
@@ -32,7 +32,7 @@ services:
             DB_NAME: ${DB_NAME}
         build:
             context: .
-            dockerfile: Dockerfile_RecommenderSystem
+            dockerfile: ./Dockerfiles/Dockerfile_RecommenderSystem
         image: recommend-system
         ports:
             - "8013:8013"
