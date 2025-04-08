@@ -1,0 +1,3 @@
+from .VectorizeBooks import GetTermFrequencyMatrix
+from .Similarities import InsertSimilarBooks
+from .InsertSimilarities import InsertSimilaritiesIntoCollection

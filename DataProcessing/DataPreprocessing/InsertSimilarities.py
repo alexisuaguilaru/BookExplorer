@@ -2,23 +2,18 @@ from pymongo import MongoClient
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 
-from .VectorizeBooks import GetTermFrequencyMatrix
-from .Similarities import InsertSimilarBooks
+from DataProcessing import GetTermFrequencyMatrix , InsertSimilarBooks
 
-if __name__ == "__main__":
-    # Setting up the connection with MongoDB
-    ClientDatabase = MongoClient(os.getenv("MONGO_URI"))
-    BooksDB = ClientDatabase[os.getenv("DB_NAME")]
-    BooksCollection = BooksDB.BooksCollection
+def InsertSimilaritiesIntoCollection(BooksCollection:object) -> None:
+    """
+        Function for precomputing and inserting 
+        similar books in each book
 
-    # Getting book
-    DataBooks = list(BooksCollection.find({}))
+        -- BooksCollection : object :: MongoDB collection where the books belong
+    """
+    data_books = list(BooksCollection.find({}))
 
-    # Getting cosine similarity between books
-    TermFrequency_InverseDocumentFrequency = GetTermFrequencyMatrix(DataBooks)
-    books_similarity = cosine_similarity(TermFrequency_InverseDocumentFrequency,TermFrequency_InverseDocumentFrequency)
+    term_frequency_inverse_document_frequency = GetTermFrequencyMatrix(data_books)
+    books_similarity = cosine_similarity(term_frequency_inverse_document_frequency,term_frequency_inverse_document_frequency)
 
-    # Inserting similar books at each book
-    InsertSimilarBooks(DataBooks,books_similarity,BooksCollection)
-
-    ClientDatabase.close()
+    InsertSimilarBooks(data_books,books_similarity,BooksCollection)
