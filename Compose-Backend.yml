@@ -24,7 +24,7 @@ services:
         depends_on:
             BooksDatabase:
                 condition: service_healthy
-        command: python -m DataProcessing
+        command: python -m DataExtraction
 
     RecommenderSystem:
         environment:

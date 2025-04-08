@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import os
 
-from DataProcessing import InsertBooksIntoCollection , InsertSimilaritiesIntoCollection
+from DataExtraction import InsertBooksIntoCollection , InsertSimilaritiesIntoCollection
 
 if __name__ == "__main__":
     # Setting up the connection with MongoDB

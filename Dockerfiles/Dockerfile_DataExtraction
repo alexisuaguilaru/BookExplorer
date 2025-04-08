@@ -1,7 +1,6 @@
 FROM python:3.12.5-slim-bookworm
 
-COPY --chmod=700 ./DataProcessing/requirements_DataExtraction.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements_DataExtraction.txt
+COPY --chmod=700 ./DataExtraction ./DataExtraction
 
-COPY --chmod=700 ./DataProcessing ./DataProcessing
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /DataExtraction/requirements_DataExtraction.txt
