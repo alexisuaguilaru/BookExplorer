@@ -1,4 +1,5 @@
 import requests
+import os
 
 from .CleanBooks import CleanDataBook
 
@@ -36,6 +37,7 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
     for subject in Subjects:
         yield GetTitlesBySubject(subject,AmountBooks)
 
+api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
 def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
         Function for getting data of books by subject
@@ -47,9 +49,8 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
 
         Return a list of books with their data
     """
-    api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
     identification = {
-                      "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
+                      "User-Agent":os.getenv("USER_AGENT")
                      }
     parameters_request = {
                         "q":Subject,
