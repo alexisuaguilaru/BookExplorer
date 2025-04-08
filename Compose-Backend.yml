@@ -24,7 +24,7 @@ services:
         depends_on:
             BooksDatabase:
                 condition: service_healthy
-        command: sh -c "python -m DataProcessing.DataInsertion.InsertBooks && python -m DataProcessing.DataPreprocessing.InsertSimilarities"
+        command: python -m DataProcessing
 
     RecommenderSystem:
         environment:

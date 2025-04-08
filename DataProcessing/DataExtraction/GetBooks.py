@@ -1,7 +1,7 @@
 import requests
 import os
 
-from DataPreprocessing import CleanDataBook
+from .CleanBooks import CleanDataBook
 
 from typing import Iterable , Any
 

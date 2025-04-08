@@ -2,7 +2,8 @@ from pymongo import MongoClient
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 
-from DataProcessing import GetTermFrequencyMatrix , InsertSimilarBooks
+from .Similarities import InsertSimilarBooks
+from .VectorizeBooks import GetTermFrequencyMatrix
 
 def InsertSimilaritiesIntoCollection(BooksCollection:object) -> None:
     """

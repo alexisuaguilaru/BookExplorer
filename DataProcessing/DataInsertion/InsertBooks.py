@@ -1,6 +1,6 @@
 import os
 
-from DataProcessing import GetBook
+from ..DataExtraction import GetBook
 
 subjects = ['fiction','fantasy','historical_fiction',
             'horror','humor','literature','magic',
