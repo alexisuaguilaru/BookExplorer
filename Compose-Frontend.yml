@@ -11,4 +11,4 @@ services:
             - ./WebInterface:/WebInterface
         ports:
             - "5000:5000"
-        command: python app.py
+        command: python -m WebInterface

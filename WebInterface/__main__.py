@@ -1,7 +1,7 @@
 from flask import Flask , render_template , redirect , url_for , request , session
 import os
 
-from source.GetBooks import RecommendedBooks
+from WebInterface import RecommendedBooks
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
