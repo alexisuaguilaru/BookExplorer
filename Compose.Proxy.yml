@@ -1,0 +1,19 @@
+services:
+    Proxy:
+        image: nginx:1.27.4-alpine
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./Proxy/conf.d:/etc/nginx/conf.d
+            - ./Proxy/ssl:/etc/letsencrypt 
+            - ./Certbot/www:/var/www/certbot
+    
+    Certbot:
+        image: certbot/certbot
+        volumes:
+            - ./Proxy/ssl:/etc/letsencrypt
+            - ./Certbot/www:/var/www/certbot
+        depends_on:
+            - Proxy
+        command: certonly --webroot --webroot-path=/var/www/certbot --email ${USER_AGENT} --agree-tos --no-eff-email -d ${DOMAIN_NAME} --dry-run
