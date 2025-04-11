@@ -41,8 +41,8 @@ git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
 Next, build and run the multi-container for backend (database, interface-API) and frontend (web interface) using Docker Compose:
 ```bash
-docker-compose -p books-explorer --file Compose-Backend.yml --env-file .env_example up -d --build
-docker-compose -p books-explorer --file Compose-Frontend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose.Backend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose.Frontend.yml --env-file .env_example up -d --build
 ```
 And finally, for interacting with the web interface go to:
 ```bash
