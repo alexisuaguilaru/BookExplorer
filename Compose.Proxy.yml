@@ -1,11 +1,16 @@
 services:
     Proxy:
-        image: nginx:1.27.4-alpine
+        environment:
+            DOMAIN_NAME: ${DOMAIN_NAME}
+        build: 
+            context: .
+            dockerfile: ./Dockerfiles/Dockerfile.Proxy
+        image: proxy-nginx
         ports:
             - "80:80"
             - "443:443"
         volumes:
-            - ./Proxy/conf.d:/etc/nginx/conf.d
+            - ./Proxy/ssl/local_cert:/etc/letsencrypt/live/${DOMAIN_NAME}
             - ./Proxy/ssl:/etc/letsencrypt 
             - ./Certbot/www:/var/www/certbot
     
