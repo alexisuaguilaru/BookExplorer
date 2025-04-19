@@ -3,6 +3,8 @@ from gunicorn.app.wsgiapp import run
 
 def Run_gunicorn() -> None:
     """
+        Function for start server gunicorn 
+        for deployment
     """
     sys.argv = [
         "gunicorn",

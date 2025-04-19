@@ -1,6 +1,17 @@
-FROM python:3.12.5-alpine
+FROM python:3.12.5-slim-bookworm
 
-COPY --chmod=700 ./WebInterface ./WebInterface
+ARG UID
+ARG GID
 
+RUN groupadd -r --gid ${GID} groups
+RUN useradd -r --uid ${UID} --gid ${GID} user
+
+COPY --chmod=750 ./WebInterface ./WebInterface
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r /WebInterface/requirements_WebInterface.txt
+
+RUN chown -R ${UID}:${GID} ./WebInterface
+
+USER ${UID}
+
+RUN chmod -R 700 ./WebInterface

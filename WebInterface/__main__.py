@@ -64,7 +64,7 @@ def ShowRecommendations():
     return render_template("ShowRecommendations.html",**ContextVariables,Recommendations=recommended_books)
 
 if __name__ == '__main__':
-    if (debug_mode:=bool(os.getenv("DEBUG_MODE"))):
+    if (debug_mode:=int(os.getenv("DEBUG_MODE"))):
         app.run(host='0.0.0.0',port=5000,debug=debug_mode)
     else:
         Run_gunicorn()

@@ -3,9 +3,13 @@ services:
         environment:
             FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
             DEBUG_MODE: ${DEBUG_MODE}
+        user: "${UID}:${GID}"
         build:
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.WebInterface
+            args:
+                UID: ${UID}
+                GID: ${GID}
         image: web-interface
         volumes:
             - ./WebInterface:/WebInterface
