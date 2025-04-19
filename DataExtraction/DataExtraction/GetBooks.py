@@ -1,4 +1,5 @@
 import requests
+import os
 
 from .CleanBooks import CleanDataBook
 
@@ -36,6 +37,7 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
     for subject in Subjects:
         yield GetTitlesBySubject(subject,AmountBooks)
 
+api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
 def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
         Function for getting data of books by subject
@@ -47,9 +49,8 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
 
         Return a list of books with their data
     """
-    api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
     identification = {
-                      "User-Agent":"BookExplorer/School/0.0 (alexis.uaguilaru@gmail.com)"
+                      "User-Agent":os.getenv("USER_AGENT")
                      }
     parameters_request = {
                         "q":Subject,
@@ -57,10 +58,13 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
                         "limit":AmountBooks,
                         "sort":"rating",
                        }
-
-    response = requests.get(api_url_search,params=parameters_request,headers=identification)
-
-    if response.status_code == 200:
-        return response.json()['docs']
+    
+    try:
+        response_books = requests.get(api_url_search,params=parameters_request,headers=identification)
+        response_books.raise_for_status() 
+    except requests.exceptions.RequestException as exception:
+        titles_subject = []
     else:
-        return []
+        titles_subject = response_books.json()['docs']
+    finally:
+        return titles_subject

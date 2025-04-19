@@ -34,19 +34,26 @@ First, the books obtained through the [OpenLibrary API](https://openlibrary.org/
 
 For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface was implemented in Flask to preserve greater security and isolation with the backend of the web service.
 
-## Installation and Usage Instructions
+<details open>
+<summary><h2>Installation and Usage Instructions</h2></summary>
+
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
 Next, build and run the multi-container for backend (database, interface-API) and frontend (web interface) using Docker Compose:
 ```bash
-docker-compose -p books-explorer --file Compose-Backend.yml --env-file .env_example up -d --build
-docker-compose -p books-explorer --file Compose-Frontend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose.Backend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose.Frontend.yml --env-file .env_example up -d --build
+docker-compose -p books-explorer --file Compose.Proxy.yml --env-file .env_example up Proxy -d --build
 ```
 And finally, for interacting with the web interface go to:
 ```bash
 http://127.0.0.1:5000
+```
+Or go to:
+```bash
+https://localhost
 ```
 For stopping the service, use this command:
 ```bash
@@ -75,7 +82,6 @@ Because the Python container related to the backend stops, it is necessary to fi
 * Example of Random Recommendations using Recommender System API:
     ```bash
     http://127.0.0.1:8013/recommendations
-    ```
   
 * Example of Recommendations based on a Book using Recommender System API:
     ```bash
@@ -83,9 +89,10 @@ Because the Python container related to the backend stops, it is necessary to fi
     ```
 
 * Example of Get Information of a Book using Recommender System API:
-    ```
+    ```bash
     http://127.0.0.1:8013/information_book?isbn=9781432896935
     ```
+</details>
 
 ## Technologies
 * APIs

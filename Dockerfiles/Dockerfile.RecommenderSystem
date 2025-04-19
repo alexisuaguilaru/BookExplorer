@@ -1,0 +1,17 @@
+FROM python:3.12.5-slim-bookworm
+
+ARG UID
+ARG GID
+
+RUN groupadd -r --gid ${GID} groups
+RUN useradd -r --uid ${UID} --gid ${GID} user
+
+COPY --chmod=750 ./RecommenderSystem ./RecommenderSystem
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /RecommenderSystem/requirements_RecommenderSystem.txt
+
+RUN chown -R ${UID}:${GID} ./RecommenderSystem
+
+USER ${UID}
+
+RUN chmod -R 700 ./RecommenderSystem
