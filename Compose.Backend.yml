@@ -24,7 +24,7 @@ services:
         environment:
             AMOUNT_BOOKS: ${AMOUNT_BOOKS}
             USER_AGENT: ${USER_AGENT}
-            MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
+            MONGO_URI: "mongodb://${MONGO_WRITE_USERNAME}:${MONGO_WRITE_PASSWORD}@BooksDatabase:27017/${DB_NAME}"
             DB_NAME: ${DB_NAME}
         user: "${UID}:${GID}"
         build:
@@ -41,7 +41,7 @@ services:
 
     RecommenderSystem:
         environment:
-            MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
+            MONGO_URI: "mongodb://${MONGO_READ_USERNAME}:${MONGO_READ_PASSWORD}@BooksDatabase:27017/${DB_NAME}"
             DB_NAME: ${DB_NAME}
         build:
             context: .
