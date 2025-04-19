@@ -58,10 +58,13 @@ def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
                         "limit":AmountBooks,
                         "sort":"rating",
                        }
-
-    response = requests.get(api_url_search,params=parameters_request,headers=identification)
-
-    if response.status_code == 200:
-        return response.json()['docs']
+    
+    try:
+        response_books = requests.get(api_url_search,params=parameters_request,headers=identification)
+        response_books.raise_for_status() 
+    except requests.exceptions.RequestException as exception:
+        titles_subject = []
     else:
-        return []
+        titles_subject = response_books.json()['docs']
+    finally:
+        return titles_subject
