@@ -1,4 +1,5 @@
 import os
+from pymongo.errors import DuplicateKeyError
 
 from ..DataExtraction import GetBook
 
@@ -15,4 +16,7 @@ def InsertBooksIntoCollection(BooksCollection:object) -> None:
         -- BooksCollection : object :: MongoDB collection where the books are inserted
     """
     for book in GetBook(subjects,int(os.getenv("AMOUNT_BOOKS"))):
-        BooksCollection.insert_one(book)
+        try:
+            BooksCollection.insert_one(book)
+        except DuplicateKeyError as exception:
+            continue

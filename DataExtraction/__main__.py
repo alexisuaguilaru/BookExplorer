@@ -8,6 +8,7 @@ if __name__ == "__main__":
     ClientDatabase = MongoClient(os.getenv("MONGO_URI"))
     BooksDB = ClientDatabase[os.getenv("DB_NAME")]
     BooksCollection = BooksDB.BooksCollection
+    BooksCollection.create_index('isbn',unique=True)
     
     # Extracting and inserting books into collection
     InsertBooksIntoCollection(BooksCollection)
