@@ -18,9 +18,13 @@ services:
             USER_AGENT: ${USER_AGENT}
             MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@BooksDatabase:27017/"
             DB_NAME: ${DB_NAME}
+        user: "${UID}:${GID}"
         build:
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.DataExtraction
+            args:
+                UID: ${UID}
+                GID: ${GID}
         image: data-extraction
         depends_on:
             BooksDatabase:
