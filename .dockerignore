@@ -1,3 +1,8 @@
 *.ipynb
 __pycache__
 *Example
+*.md
+BooksDatabase/Data/**
+LICENSE
+.git*
+.env*

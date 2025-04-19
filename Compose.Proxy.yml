@@ -2,9 +2,13 @@ services:
     Proxy:
         environment:
             DOMAIN_NAME: ${DOMAIN_NAME}
+        user: "${UID}:${GID}"
         build: 
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.Proxy
+            args:
+                UID: ${UID}
+                GID: ${GID}
         image: proxy-nginx
         networks:
             - books_explorer_external
@@ -13,14 +17,15 @@ services:
             - "443:443"
         volumes:
             - ./Proxy/ssl/local_cert:/etc/letsencrypt/live/${DOMAIN_NAME}
-            - ./Proxy/ssl:/etc/letsencrypt 
-            - ./Certbot/www:/var/www/certbot
+            - ./Proxy/ssl:/etc/letsencrypt:ro
+            - ./Certbot/www:/var/www/certbot:rw
     
     Certbot:
+        user: "${UID}:${GID}"
         image: certbot/certbot
         volumes:
-            - ./Proxy/ssl:/etc/letsencrypt
-            - ./Certbot/www:/var/www/certbot
+            - ./Proxy/ssl:/etc/letsencrypt:rw
+            - ./Certbot/www:/var/www/certbot:rw
         networks:
             - books_explorer_external
         depends_on:

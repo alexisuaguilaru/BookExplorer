@@ -1,3 +1,9 @@
 *.ipynb
 __pycache__
 .env_dev
+.env_prod
+manual*
+to-do*
+BooksDatabase/Data*
+Documentation/*
+Proxy/ssl/*

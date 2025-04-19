@@ -1,5 +1,16 @@
 FROM nginx:1.27.4-alpine
 
+ARG UID
+ARG GID
+
+RUN groupadd -r --gid ${GID} groups
+RUN useradd -r --uid ${UID} --gid ${GID} user
+
+RUN chown -R ${UID}:${GID} /etc/nginx/conf.d
+RUN chmod -R 750 /etc/nginx/conf.d
+
+USER ${UID}
+
 COPY --chmod=700 ./Proxy/conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf.template
 COPY --chmod=700 ./Proxy/conf.d/BuildConf.sh /etc/nginx/conf.d/BuildConf.sh
 
