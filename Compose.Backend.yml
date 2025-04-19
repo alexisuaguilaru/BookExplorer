@@ -43,9 +43,13 @@ services:
         environment:
             MONGO_URI: "mongodb://${MONGO_READ_USERNAME}:${MONGO_READ_PASSWORD}@BooksDatabase:27017/${DB_NAME}"
             DB_NAME: ${DB_NAME}
+        user: "${UID}:${GID}"
         build:
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.RecommenderSystem
+            args:
+                UID: ${UID}
+                GID: ${GID}
         image: recommend-system
         ports:
             - "8013:8013"
