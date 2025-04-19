@@ -3,7 +3,15 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+            
+            DATABASE: ${DB_NAME}
+            MONGO_WRITE_USERNAME: ${MONGO_WRITE_USERNAME} 
+            MONGO_WRITE_PASSWORD: ${MONGO_WRITE_PASSWORD}
+            MONGO_READ_USERNAME: ${MONGO_READ_USERNAME}
+            MONGO_READ_PASSWORD: ${MONGO_READ_PASSWORD}
         image: mongo:7.0
+        volumes:
+            - ./BooksDatabase/mongo.config.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
         ports:
             - "27017:27017"
         healthcheck:
