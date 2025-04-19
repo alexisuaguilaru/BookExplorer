@@ -2,7 +2,7 @@ from flask import Flask , request , jsonify
 from pymongo import MongoClient
 import os
 
-from RecommenderSystem import GetRecommendations , GetInformationBook
+from RecommenderSystem import GetRecommendations , GetInformationBook , Run_gunicorn
 
 # Setting up the connection with MongoDB
 ClientDatabase = MongoClient(os.getenv("MONGO_URI"))
@@ -24,4 +24,7 @@ def InformationBook():
     return jsonify(GetInformationBook(isbn,BooksCollection))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8013,debug=bool(os.getenv("DEBUG_MODE")))
+    if (debug_mode:=bool(os.getenv("DEBUG_MODE"))):
+        app.run(host='0.0.0.0',port=8013,debug=debug_mode)
+    else:
+        Run_gunicorn()
