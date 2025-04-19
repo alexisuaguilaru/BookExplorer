@@ -6,6 +6,8 @@ services:
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.Proxy
         image: proxy-nginx
+        networks:
+            - books_explorer_external
         ports:
             - "80:80"
             - "443:443"
@@ -19,6 +21,11 @@ services:
         volumes:
             - ./Proxy/ssl:/etc/letsencrypt
             - ./Certbot/www:/var/www/certbot
+        networks:
+            - books_explorer_external
         depends_on:
             - Proxy
         command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL_ID} --agree-tos -d ${DOMAIN_NAME}
+
+networks:
+    books_explorer_external:

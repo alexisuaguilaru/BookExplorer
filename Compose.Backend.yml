@@ -13,6 +13,8 @@ services:
         volumes:
             - ./BooksDatabase/mongo.config.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
             - ./BooksDatabase/Data:/data/db
+        networks:
+            - books_explorer_internal
         ports:
             - "27017:27017"
         healthcheck:
@@ -35,6 +37,8 @@ services:
                 UID: ${UID}
                 GID: ${GID}
         image: data-extraction
+        networks:
+            - books_explorer_internal
         depends_on:
             BooksDatabase:
                 condition: service_healthy
@@ -52,6 +56,8 @@ services:
                 UID: ${UID}
                 GID: ${GID}
         image: recommend-system
+        networks:
+            - books_explorer_internal
         ports:
             - "8013:8013"
         depends_on:
@@ -60,3 +66,7 @@ services:
             DataExtraction:
                 condition: service_completed_successfully
         command: sh -c "sleep 10 && python -m RecommenderSystem"
+
+networks:
+    books_explorer_internal:
+        internal: true

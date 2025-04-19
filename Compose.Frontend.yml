@@ -9,6 +9,14 @@ services:
         image: web-interface
         volumes:
             - ./WebInterface:/WebInterface
+        networks:
+            - books_explorer_internal
+            - books_explorer_external
         ports:
             - "5000:5000"
         command: python -m WebInterface
+
+networks:
+    books_explorer_internal:
+        internal: true
+    books_explorer_external:

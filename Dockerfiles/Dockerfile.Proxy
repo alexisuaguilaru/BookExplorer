@@ -1,6 +1,6 @@
 FROM nginx:1.27.4-alpine
 
-COPY ./Proxy/conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf.template
-COPY ./Proxy/conf.d/BuildConf.sh /etc/nginx/conf.d/BuildConf.sh
+COPY --chmod=700 ./Proxy/conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf.template
+COPY --chmod=700 ./Proxy/conf.d/BuildConf.sh /etc/nginx/conf.d/BuildConf.sh
 
 CMD ["/etc/nginx/conf.d/BuildConf.sh"]
