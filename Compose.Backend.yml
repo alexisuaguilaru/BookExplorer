@@ -12,6 +12,7 @@ services:
         image: mongo:7.0
         volumes:
             - ./BooksDatabase/mongo.config.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            - ./BooksDatabase/Data:/data/db
         ports:
             - "27017:27017"
         healthcheck:
