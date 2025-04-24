@@ -1,5 +1,6 @@
 services:
     Proxy:
+        container_name: nginx_proxy 
         environment:
             DOMAIN_NAME: ${DOMAIN_NAME}
         build: 
@@ -20,6 +21,7 @@ services:
             - ./Certbot/www:/var/www/certbot:rw
     
     Certbot:
+        container_name: certbot
         user: "${UID}:${GID}"
         image: certbot/certbot
         volumes:

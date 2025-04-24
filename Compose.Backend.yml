@@ -1,5 +1,6 @@
 services:
     BooksDatabase:
+        container_name: books_database
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
@@ -24,6 +25,7 @@ services:
             retries: 10
 
     DataExtraction:
+        container_name: data_extraction
         environment:
             AMOUNT_BOOKS: ${AMOUNT_BOOKS}
             USER_AGENT: ${USER_AGENT}
@@ -45,6 +47,7 @@ services:
         command: python -m DataExtraction
 
     RecommenderSystem:
+        container_name: recommender_system
         environment:
             MONGO_URI: "mongodb://${MONGO_READ_USERNAME}:${MONGO_READ_PASSWORD}@BooksDatabase:27017/${DB_NAME}"
             DB_NAME: ${DB_NAME}
