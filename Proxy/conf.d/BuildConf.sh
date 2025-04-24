@@ -2,6 +2,6 @@
 
 envsubst '$DOMAIN_NAME' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf
 
-cat /etc/nginx/conf.d/nginx.conf
+chown -R $UID:$GID /etc/nginx
 
-exec nginx -g 'daemon off;'
+exec gosu $UID:$GID nginx -g 'daemon off;'

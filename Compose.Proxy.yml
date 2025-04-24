@@ -2,7 +2,6 @@ services:
     Proxy:
         environment:
             DOMAIN_NAME: ${DOMAIN_NAME}
-        user: "${UID}:${GID}"
         build: 
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.Proxy
