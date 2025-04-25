@@ -16,8 +16,7 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - ./Proxy/ssl/local_cert/fullchain.pem:/etc/letsencrypt/live/${DOMAIN_NAME}/fullchain.pem:ro
-            - ./Proxy/ssl/local_cert/privkey.pem:/etc/letsencrypt/live/${DOMAIN_NAME}/privkey.pem:ro
+            - ./Proxy/ssl:/etc/letsencrypt/:ro
             - ./Certbot/www:/var/www/certbot:rw
     
     Certbot:
