@@ -19,8 +19,7 @@ def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
     """
     for batch_books in GetBooksData(Subjects,AmountBooks):
         for book in batch_books:
-            if all(map(lambda field: book.get(field,False),Fields)):
-                CleanDataBook(book)
+            if all(map(lambda field: book.get(field,False),Fields)) and CleanDataBook(book):
                 yield book
 
 def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,str]]]:

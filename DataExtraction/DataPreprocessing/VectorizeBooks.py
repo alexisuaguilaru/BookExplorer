@@ -12,6 +12,6 @@ def GetTermFrequencyMatrix(DataBooks:list[dict]) -> ndarray:
 
         Return TF-IDF matrix 
     """
-    TitleSubjectsData_Books = [' '.join(map(str.lower,[book['title']]+book['subject'][:10])) for book in DataBooks]
-    TitleSubjectsVectorizer = TfidfVectorizer()
+    TitleSubjectsData_Books = [' '.join(map(str.lower,[book['title']]+book['subject'])) for book in DataBooks]
+    TitleSubjectsVectorizer = TfidfVectorizer(stop_words=None)
     return TitleSubjectsVectorizer.fit_transform(TitleSubjectsData_Books)
