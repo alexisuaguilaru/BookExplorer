@@ -10,6 +10,7 @@ services:
             MONGO_WRITE_PASSWORD: ${MONGO_WRITE_PASSWORD}
             MONGO_READ_USERNAME: ${MONGO_READ_USERNAME}
             MONGO_READ_PASSWORD: ${MONGO_READ_PASSWORD}
+        user: 999:999
         image: mongo:7.0
         volumes:
             - ./BooksDatabase/mongo.config.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -41,6 +42,7 @@ services:
         image: data-extraction
         networks:
             - books_explorer_internal
+            - books_explorer_external
         depends_on:
             BooksDatabase:
                 condition: service_healthy
@@ -74,3 +76,4 @@ services:
 networks:
     books_explorer_internal:
         internal: true
+    books_explorer_external:
