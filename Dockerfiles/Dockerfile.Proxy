@@ -6,6 +6,10 @@ ARG GID
 RUN groupadd -r --gid ${GID} groups
 RUN useradd -r --uid ${UID} --gid ${GID} user
 
+RUN mkdir -p /etc/letsencrypt/live
+RUN chown -R ${UID}:${GID} /etc/letsencrypt
+RUN chmod -R 750 /etc/letsencrypt
+
 RUN apt-get update && apt-get install -y gosu 
 
 COPY --chmod=600 ./Proxy/conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf.template
