@@ -9,7 +9,7 @@ PROXY := Compose.Proxy.yml
 
 UP := up -d --build
 
-.PHONY: ssl-certificate example_data_extraction example __example_complement developer_data_extraction developer __dev_complement deploy_production down
+.PHONY: ssl-certificate example_data_extraction example __example_complement developer_data_extraction developer __dev_complement deploy_production down down_volume
 
 ssl-certificate:
 	mkdir -p Proxy/ssl/local_cert && \
@@ -55,3 +55,6 @@ deploy_production:
 
 down:
 	$(DOCKER) down
+
+down_volume:
+	$(DOCKER) down -v

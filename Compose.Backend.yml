@@ -10,11 +10,16 @@ services:
             MONGO_WRITE_PASSWORD: ${MONGO_WRITE_PASSWORD}
             MONGO_READ_USERNAME: ${MONGO_READ_USERNAME}
             MONGO_READ_PASSWORD: ${MONGO_READ_PASSWORD}
-        user: 999:999
-        image: mongo:7.0
+        build:
+            context: .
+            dockerfile: ./Dockerfiles/Dockerfile.BooksDatabase
+            args:
+                UID: ${UID}
+                GID: ${GID}
+        image: books-database
         volumes:
             - ./BooksDatabase/mongo.config.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-            - ./BooksDatabase/Data:/data/db
+            - books_database_data:/data/db
         networks:
             - books_explorer_internal
         ports:
@@ -72,6 +77,9 @@ services:
             DataExtraction:
                 condition: service_completed_successfully
         command: sh -c "sleep 10 && python -m RecommenderSystem"
+
+volumes:
+    books_database_data:
 
 networks:
     books_explorer_internal:
