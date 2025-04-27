@@ -1,8 +1,8 @@
 services:
     Proxy:
+        container_name: nginx_proxy 
         environment:
             DOMAIN_NAME: ${DOMAIN_NAME}
-        user: "${UID}:${GID}"
         build: 
             context: .
             dockerfile: ./Dockerfiles/Dockerfile.Proxy
@@ -16,11 +16,11 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - ./Proxy/ssl/local_cert:/etc/letsencrypt/live/${DOMAIN_NAME}
-            - ./Proxy/ssl:/etc/letsencrypt:ro
+            - ./Proxy/ssl:/etc/letsencrypt/:ro
             - ./Certbot/www:/var/www/certbot:rw
     
     Certbot:
+        container_name: certbot
         user: "${UID}:${GID}"
         image: certbot/certbot
         volumes:

@@ -39,7 +39,7 @@ def BookExplorer():
         recommended_books = RecommendedBooks()
         return render_template("BookExplorer.html",**ContextVariables,Recommendations=recommended_books)
     
-    elif request.method == 'POST' and form_selection.validate_on_submit():
+    if request.method == 'POST' and form_selection.validate_on_submit():
         if session['selections'] < 4:
             book_isbn = form_selection.book_isbn.data
             session['selections'] += 1
@@ -50,9 +50,6 @@ def BookExplorer():
 
         else:
             return redirect(url_for("ShowRecommendations"))
-        
-    else:
-        return "Bad"
         
 @app.route('/Recommendations')
 def ShowRecommendations():

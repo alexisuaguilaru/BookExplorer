@@ -34,65 +34,42 @@ First, the books obtained through the [OpenLibrary API](https://openlibrary.org/
 
 For performing the interaction between the web interface (client) and the recommender system (server), Flask was used to provide the communication service between both parts. Finally, the web interface was implemented in Flask to preserve greater security and isolation with the backend of the web service.
 
-<details open>
-<summary><h2>Installation and Usage Instructions</h2></summary>
+## Installation and Usage Instructions
+
+The following procedure is to execute a basic example of the operation of the system without serving to the Internet. To perform an execution or deploy refer to [Usage Manual](./Documentation/UsageManual.pdf) 
 
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
-Next, build and run the multi-container for backend (database, interface-API) and frontend (web interface) using Docker Compose:
+
+Then, it is necessary to generate a self-signed certificate with localhost domain, this is done with:
 ```bash
-docker-compose -p books-explorer --file Compose.Backend.yml --env-file .env_example up -d --build
-docker-compose -p books-explorer --file Compose.Frontend.yml --env-file .env_example up -d --build
-docker-compose -p books-explorer --file Compose.Proxy.yml --env-file .env_example up Proxy -d --build
+make ssl_certificate
 ```
-And finally, for interacting with the web interface go to:
+
+Next, build and run the multi-container for the different microservices for the service using:
 ```bash
-http://127.0.0.1:5000
+make dev
+```
+In case it has been done previously, use:
+```bash
+make dev_data_extraction
+```
+
+Finally, to interact with the web interface, go to:
+```bash
+http://127.0.0.1
 ```
 Or go to:
 ```bash
 https://localhost
 ```
-For stopping the service, use this command:
+
+For stopping the service, use:
 ```bash
-docker-compose -p books-explorer down
+make down
 ```
-### Examples
-Because the Python container related to the backend stops, it is necessary to first start it to run the exemplars.
-* Example to See all Available Fields (Categories)
-    ```bash
-    docker-compose -p books-explorer start DataExtraction
-    docker-compose -p books-explorer exec DataExtraction python -m DataProcessing.Examples.Example_RequestAllFields
-    ```
-
-* Example of Books Extraction
-    ```bash
-    docker-compose -p books-explorer start DataExtraction
-    docker-compose -p books-explorer exec DataExtraction python -m DataProcessing.Examples.Example_BooksExtraction
-    ```
-
-* Example of Query of Three Random Books
-    ```bash
-    docker-compose -p books-explorer start DataExtraction
-    docker-compose -p books-explorer exec --env .env_example DataExtraction python DataProcessing/Examples/Example_Random3Books.py
-    ```
-
-* Example of Random Recommendations using Recommender System API:
-    ```bash
-    http://127.0.0.1:8013/recommendations
-  
-* Example of Recommendations based on a Book using Recommender System API:
-    ```bash
-    http://127.0.0.1:8013/recommendations?isbn=9780905712604
-    ```
-
-* Example of Get Information of a Book using Recommender System API:
-    ```bash
-    http://127.0.0.1:8013/information_book?isbn=9781432896935
-    ```
-</details>
 
 ## Technologies
 * APIs

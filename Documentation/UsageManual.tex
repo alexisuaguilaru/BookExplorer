@@ -1,0 +1,139 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{geometry}
+\geometry{
+    left=2cm, 
+    right=2cm,
+    top=3cm,  
+    bottom=2cm
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\usepackage{graphicx}
+
+\usepackage{setspace}
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+
+\usepackage{enumitem}
+
+
+\begin{document}
+    
+    \begin{titlepage}
+        \vspace*{\fill}
+        \begin{center}
+            {\Huge Usage Manual of\\Recommender System}
+        \end{center}
+        \vspace*{\fill}
+    \end{titlepage}
+
+    \newpage
+
+    \tableofcontents
+
+    \newpage
+
+    \section{Generalities}
+    {
+        In this section are found different procedures and basic concepts that 
+        are shared throughout the different profiles and stages.
+
+        \subsection{Initial Installation}
+        {
+            To start developing a feature, test a functionality or module, or 
+            deploy the service, it is required to clone the repository, for 
+            this purpose it is used:
+            
+            \begin{verbatim}
+            git clone https://github.com/alexisuaguilaru/BookExplorer.git 
+            \end{verbatim}
+
+            Each of the modules that are written in Python, have a 
+            \verb*|requirements.txt| file that contains the libraries required 
+            for the operation of the module or, alternatively, to install to 
+            develop or implement a change in a feature of the respective module.
+        }
+
+        \subsection{Docker Compose}
+        {
+            The service is divided into three files \verb*|docker-compose.yml|, 
+            where each one contains the different microservices according to the 
+            functionality it performs within the service. The files contain the 
+            following microservices:
+
+            \begin{itemize}[label=$\bullet$]
+                \item \textbf{Backend}: MongoDB database [BooksDatabase], Data extraction 
+                from the API [DataExtraction] and API of the main microservice [SystemRecommender]
+                \item \textbf{Frontend}: Service web interface [WebInterface] 
+                \item \textbf{Proxy}: Reverse proxy based on nginx [Proxy] and automation of SSL 
+                certificate acquisition [Certbot]
+            \end{itemize}
+        }
+
+        \subsection{Configuration File \emph{.env}}
+        {
+            The \verb*|.evn_example| file serves as an example of the environment 
+            variables that must be changed to adjust the behavior of the three 
+            \verb*|docker-compose.yml| files. The configurable environment variables are:
+
+            \begin{itemize}[label=$\bullet$]
+                \item \emph{UID}: ID of the non root user that executes the different services in the \verb*|docker-compose|
+                \item \emph{GID}: ID of the group the non root user belongs to
+                \item \emph{MONGO\_INITDB\_ROOT\_USERNAME}: Username of the database administrator in MongoDB
+                \item \emph{MONGO\_INITDB\_ROOT\_PASSWORD}: Password for the MongoDB administrator
+                \item \emph{DB\_NAME}: Name of the database to be created in MongoDB
+                \item \emph{MONGO\_WRITE\_USERNAME}: Username of non root user who can only write data to the database
+                \item \emph{MONGO\_WRITE\_PASSWORD}: Password for user with write role
+                \item \emph{MONGO\_READ\_USERNAME}: Username of non root user who only reads data in the database
+                \item \emph{MONGO\_READ\_PASSWORD}: Password for the user with read role
+                \item \emph{AMOUNT\_BOOKS}: Number of books that are extracted from the API. It does not represent the final number found in the associated collection in MongoDB.
+                \item \emph{USER\_AGENT}: Identification credentials for the OpenLibrary API (project name, email). It is not a token or key for the API.
+                \item \emph{FLASK\_SECRET\_KEY}: Secret key used by Flask for encryption and session management.
+                \item \emph{DEBUG\_MODE}: Mode in which Flask applications run, whether in debug mode or production mode
+                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served
+                \item \emph{EMAIL\_ID}: Email used to generate certificates generated from CertBot
+            \end{itemize}
+        }
+
+        \subsection{Execution File \emph{Makefile}}
+        {
+            The \verb*|Makefile| file contains commands that execute the different 
+            services contained in the \verb*|docker-compose.yml| files depending on 
+            whether it is the first time it is executed or not. It contains the 
+            following variables to configure:
+
+            \begin{itemize}[label=$\bullet$]
+                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served and from where the self-signed certificates are generated.
+                \item \emph{ENV}: Environment under which the service is being executed, depending on whether it is for development, testing or deployment.
+            \end{itemize}
+
+            Since it deals with both passwords and secret keys, the following command 
+            is available to generate them using alphanumeric characters:
+
+            \begin{verbatim}
+            make secret_key LENGTH=integer
+            \end{verbatim}
+
+            Where \emph{LENGTH} controls the length of the key, preferably greater 
+            than $12$ characters.
+        }
+
+    }
+
+    \newpage
+
+    \section{Development Stage}
+
+    \newpage
+
+    \section{Testing Stage}
+
+    \newpage
+
+    \section{Deployment Stage}
+
+\end{document}
