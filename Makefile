@@ -1,5 +1,6 @@
 DOMAIN_NAME ?= localhost
 ENV ?= example
+LENGTH ?= 12
 
 DOCKER := docker-compose -p books-explorer
 DOCKER_COMPOSE :=  $(DOCKER) --env-file .env_
@@ -10,7 +11,7 @@ PROXY := Compose.Proxy.yml
 
 UP := up -d --build
 
-.PHONY: ssl_certificate pre_up pre_up_data_extraction dev dev_data_extraction deploy deploy_restart down down_volume
+.PHONY: ssl_certificate secret_key pre_up pre_up_data_extraction dev dev_data_extraction deploy deploy_restart down down_volume
  
 ssl_certificate:
 	mkdir -p Proxy/ssl/live/$(DOMAIN_NAME) && \
@@ -21,6 +22,8 @@ ssl_certificate:
 		-subj "/CN=$(DOMAIN_NAME)" \
 		-addext "subjectAltName=DNS:${DOMAIN_NAME}"
 
+secret_key:
+	openssl rand -base64 $(LENGTH) | tr -dc 'A-Za-z0-9' | head -c $(LENGTH) ; echo
 
 pre_up:
 	$(DOCKER_COMPOSE)$(ENV) --file $(BACKEND) $(UP)
