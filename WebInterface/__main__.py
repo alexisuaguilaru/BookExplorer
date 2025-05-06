@@ -14,7 +14,6 @@ app.config.update(
 )
 csrf = CSRFProtect(app)
 
-
 @app.route('/')
 def HomePage():
     ContextVariables = {
