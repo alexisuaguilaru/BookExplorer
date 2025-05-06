@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Times New Roman', Times, serif;
-    color: rgb(227, 146, 80);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.present-options {
+    @apply grid grid-cols-3 grid-rows-1;
+}
+
+.book-option {
+    @apply bg-green-100;
+}
+
+.cover-book {
+    @apply bg-red-100;
+}
+
+.select-option  {
+    @apply bg-pink-500;
+}
+
+.present-recommendations {
+    @apply grid grid-cols-3 grid-rows-1;
+}
+
+.recommendation {
+    @apply bg-pink-100;
 }
