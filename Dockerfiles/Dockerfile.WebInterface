@@ -14,4 +14,4 @@ RUN chown -R ${UID}:${GID} ./WebInterface
 
 USER ${UID}
 
-RUN chmod -R 700 ./WebInterface
+RUN chmod -R 750 ./WebInterface

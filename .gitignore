@@ -3,9 +3,12 @@ __pycache__
 .env_dev
 .env_prod
 
+*node_modules*
+
 to-do*
 BooksDatabase/Data*
 Proxy/ssl/*
+WebInterface/static/css*
 
 *.aux
 *.bbl

@@ -1,0 +1,20 @@
+FROM node:23.11-slim
+
+ARG UID
+ARG GID
+
+RUN groupadd -r --gid ${GID} groups
+RUN useradd -r --uid ${UID} --gid ${GID} user
+
+WORKDIR /WebInterface
+
+COPY ./WebInterface/*.json ./WebInterface/tailwind.config.js ./
+COPY ./WebInterface/static/scss ./static/scss
+
+RUN npm install
+
+RUN chown -R ${UID}:${GID} ./
+
+USER ${UID}
+
+RUN chmod -R 750 ./

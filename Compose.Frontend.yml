@@ -1,4 +1,20 @@
 services:
+    NodeJS:
+        container_name: node_js
+        user: "${UID}:${GID}"
+        build:
+            context: .
+            dockerfile: ./Dockerfiles/Dockerfile.NodeJS
+            args:
+                UID: ${UID}
+                GID: ${GID}
+        image: node-js
+        volumes:
+            - ./WebInterface/static:/WebInterface/static
+        networks:
+            - books_explorer_internal
+        command: npm run build
+
     WebInterface:
         container_name: web_interface
         environment:
@@ -19,6 +35,8 @@ services:
             - books_explorer_external
         ports:
             - "5000:5000"
+        depends_on:
+            - NodeJS
         command: python -m WebInterface
 
 networks:
