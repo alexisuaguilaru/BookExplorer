@@ -4,6 +4,9 @@
         {% for recommended_book in Recommendations %}
         <div>
             <h3>{{ recommended_book.title }}</h3>
+            <div>
+                <img src='{{ recommended_book.image }}'>
+            </div>
             <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
         </div>
         {% endfor %}

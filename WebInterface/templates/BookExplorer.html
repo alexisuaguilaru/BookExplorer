@@ -7,8 +7,10 @@
         {% for recommended_book in Recommendations %}
         <div>
             <h3>{{ recommended_book.title }}</h3>
+            <div>
+                <img src='{{ recommended_book.image }}'>
+            </div>
             <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
-            <p><b>ISBN</b>: {{ recommended_book.isbn }}</p>
             <button type="submit" onclick="document.getElementById('book_isbn').value = '{{ recommended_book.isbn }}'; document.getElementById('bookForm').submit();">
                 Select
             </button>
