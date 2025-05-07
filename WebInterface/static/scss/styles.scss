@@ -14,6 +14,10 @@ header {
     h1 {
         @apply flex space-x-4 text-white font-serif text-4xl font-bold ;
     }
+
+    a {
+        @apply hover:text-indigo-300 ;
+    }
 }
     
 footer {
@@ -24,7 +28,7 @@ footer {
     }
     
     a {
-        @apply hover:text-blue-100 ;
+        @apply hover:text-indigo-300 ;
     }
 }
     
