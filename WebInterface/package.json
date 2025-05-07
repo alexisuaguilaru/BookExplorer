@@ -5,11 +5,8 @@
     "main": "index.js",
     "scripts": {
         "build:tailwind": "npx tailwindcss -i ./static/scss/styles.scss -o ./static/css/output.css",
-        "build:sass": "sass ./static/scss/:./static/css/",
-        "build": "npm run build:sass && npm run build:tailwind",
-        "dev:tailwind": "npx tailwindcss -i ./static/scss/styles.scss -o ./static/css/output.css --watch --poll",
-        "dev:sass": "sass --watch --poll ./static/scss/:./static/css/",
-        "dev": "concurrently \"npm run dev:tailwind\" \"npm run dev:sass\""
+        "dev": "npm run build:tailwind -- --watch --poll",
+        "build": "npm run build:tailwind"
     },
     "dependencies": {
         "tailwindcss": "^3.3.0",
