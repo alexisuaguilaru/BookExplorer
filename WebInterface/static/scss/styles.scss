@@ -1,9 +1,11 @@
+@import "./_home_page.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    @apply bg-indigo-100 ;
+    @apply bg-indigo-100 min-h-screen grid grid-rows-[auto_1fr_auto] ;
 }
 
 header {
@@ -27,5 +29,5 @@ footer {
 }
     
 main {
-    @apply font-mono text-black ;
+    @apply relative box-border p-4 font-mono text-black ;
 }
