@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.present-options {
+    @apply flex sm:flex-row flex-col items-center gap-4 p-4 ;
+}
+
+.book-option {
+    @apply flex flex-col items-center justify-center text-center ; 
+}
