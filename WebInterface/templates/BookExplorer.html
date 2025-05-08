@@ -1,19 +1,20 @@
 {% extends "__Base.html" %}
 
 {% block main %}
-    <form method="POST" action="/BookExplorer" class="present-options">
+    <form method="POST" action="/BookExplorer">
         {{ FormSelections.hidden_tag() }}
-
-        {% for recommended_book in Recommendations %}
-        <div class="book-option">
-            <h3>{{ recommended_book.title }}</h3>
-            <button class="select-option" type="submit" onclick="document.getElementById('book_isbn').value = '{{ recommended_book.isbn }}'; document.getElementById('bookForm').submit();">
-                <div class="cover-book">
-                    <img src='{{ recommended_book.image }}'>
-                </div>
-            </button>
-            <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
+        <div class="present-options">
+            {% for recommended_book in Recommendations %}
+            <div class="book-option">
+                <h3>{{ recommended_book.title }}</h3>
+                <button class="select-option" type="submit" onclick="document.getElementById('book_isbn').value = '{{ recommended_book.isbn }}'; document.getElementById('bookForm').submit();">
+                    <div class="cover-book">
+                        <img src='{{ recommended_book.image }}'>
+                    </div>
+                </button>
+                <p><b>Authors</b>: {{ recommended_book.author_name[0] }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </form>
 {% endblock %}

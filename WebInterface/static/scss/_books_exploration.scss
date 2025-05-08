@@ -3,9 +3,14 @@
 @tailwind utilities;
 
 .present-options {
-    @apply flex sm:flex-row flex-col items-center gap-4 p-4 ;
+    @apply flex sm:flex-row flex-col justify-center items-center gap-4 p-6 ;
 }
 
 .book-option {
-    @apply flex flex-col items-center justify-center text-center ; 
+    @apply flex flex-col items-center justify-center text-center p-4 ;
+    @apply border-2 border-blue-900 border-dashed rounded-md w-full h-[600px] ;
+}
+
+.cover-book img {
+    @apply w-auto h-[500px] ;
 }
