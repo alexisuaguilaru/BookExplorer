@@ -14,3 +14,11 @@
 .cover-book img {
     @apply w-auto h-[500px] ;
 }
+
+.title-book {
+    @apply text-blue-900 text-xl font-bold ; 
+}
+
+.author-book {
+    @apply text-blue-900 text-xl ; 
+}

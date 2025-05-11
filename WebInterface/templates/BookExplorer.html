@@ -6,13 +6,13 @@
         <div class="present-options">
             {% for recommended_book in Recommendations %}
             <div class="book-option">
-                <h3>{{ recommended_book.title }}</h3>
+                <h3 class="title-book">{{ recommended_book.title }}</h3>
                 <button class="select-option" type="submit" onclick="document.getElementById('book_isbn').value = '{{ recommended_book.isbn }}'; document.getElementById('bookForm').submit();">
                     <div class="cover-book">
                         <img src='{{ recommended_book.image }}'>
                     </div>
                 </button>
-                <p><b>Authors</b>: {{ recommended_book.author_name[0] }}</p>
+                <p class="author-book">{{ recommended_book.author_name[0] }}</p>
             </div>
             {% endfor %}
         </div>

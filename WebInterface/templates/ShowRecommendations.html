@@ -4,11 +4,11 @@
         <div class="present-recommendations">
             {% for recommended_book in Recommendations %}
             <div class="recommendation">
-                <h3>{{ recommended_book.title }}</h3>
+                <h3 class="title-book">{{ recommended_book.title }}</h3>
                 <div class="cover-book">
                     <img src='{{ recommended_book.image }}'>
                 </div>
-                <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
+                <p class="author-book">{{ recommended_book.author_name[0] }}</p>
             </div>
             {% endfor %}
         </div> 
