@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.present-recommendations {
+    @apply flex sm:flex-row flex-col justify-center items-center gap-4 p-6 ;
+}
+
+.recommendation {
+    @apply flex flex-col items-center justify-center text-center p-4 ;
+    @apply border-4 border-indigo-700 border-dashed rounded-md w-full h-[600px] ;
+}
+
+.isbn-book {
+    @apply text-blue-900 font-bold ; 
+}
