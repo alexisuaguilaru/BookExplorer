@@ -6,3 +6,5 @@ BooksDatabase/Data/**
 LICENSE
 .git*
 .env*
+WebInterface/node_modules**
+Proxy/ssl/**
