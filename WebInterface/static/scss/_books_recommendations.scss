@@ -8,9 +8,22 @@
 
 .recommendation {
     @apply flex flex-col items-center justify-center text-center p-4 ;
-    @apply border-4 border-indigo-700 border-dashed rounded-md w-full h-[600px] ;
+    @apply border-4 border-indigo-700 border-dashed rounded-md w-full h-[600px] ; 
+    animation: borderRainbow 4s linear infinite ; 
+}
+
+.cover-book img {
+    @apply w-auto h-[500px] ;
 }
 
 .isbn-book {
     @apply text-blue-900 font-bold ; 
+}
+
+@keyframes borderRainbow {
+    0% { border-color: #c7d2fe; }
+    25% { border-color: #6366f1; }
+    50% { border-color: #1e3a8a; }
+    75% { border-color: #6366f1; }
+    100% { border-color: #c7d2fe; }
 }
