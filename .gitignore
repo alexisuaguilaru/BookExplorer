@@ -1,7 +1,6 @@
 *.ipynb
 __pycache__
-.env_dev
-.env_prod
+.env*
 
 *node_modules*
 

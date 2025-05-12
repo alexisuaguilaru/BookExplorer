@@ -20,13 +20,16 @@
 
 \usepackage{enumitem}
 
+\usepackage{csquotes}
+\usepackage{hyperref}
+\usepackage[style=ieee]{biblatex}
 
 \begin{document}
     
     \begin{titlepage}
         \vspace*{\fill}
         \begin{center}
-            {\Huge Usage Manual of\\Recommender System}
+            {\Huge Usage Manual of\\Book Explorer}
         \end{center}
         \vspace*{\fill}
     \end{titlepage}
@@ -67,14 +70,14 @@
 
             \begin{itemize}[label=$\bullet$]
                 \item \textbf{Backend}: MongoDB database [BooksDatabase], Data extraction 
-                from the API [DataExtraction] and API of the main microservice [SystemRecommender]
-                \item \textbf{Frontend}: Service web interface [WebInterface] 
+                from the API [DataExtraction] and API of the main microservice [SystemRecommender].
+                \item \textbf{Frontend}: CSS styles builder [NodeJS] and web interface [WebInterface].
                 \item \textbf{Proxy}: Reverse proxy based on nginx [Proxy] and automation of SSL 
-                certificate acquisition [Certbot]
+                certificate acquisition [Certbot].
             \end{itemize}
         }
 
-        \subsection{Configuration File \emph{.env}}
+        \subsection{Configuration File \emph{.env}}\label{sec:ConfEnv}
         {
             The \verb*|.evn_example| file serves as an example of the environment 
             variables that must be changed to adjust the behavior of the three 
@@ -83,23 +86,30 @@
             \begin{itemize}[label=$\bullet$]
                 \item \emph{UID}: ID of the non root user that executes the different services in the \verb*|docker-compose|
                 \item \emph{GID}: ID of the group the non root user belongs to
-                \item \emph{MONGO\_INITDB\_ROOT\_USERNAME}: Username of the database administrator in MongoDB
-                \item \emph{MONGO\_INITDB\_ROOT\_PASSWORD}: Password for the MongoDB administrator
-                \item \emph{DB\_NAME}: Name of the database to be created in MongoDB
-                \item \emph{MONGO\_WRITE\_USERNAME}: Username of non root user who can only write data to the database
-                \item \emph{MONGO\_WRITE\_PASSWORD}: Password for user with write role
-                \item \emph{MONGO\_READ\_USERNAME}: Username of non root user who only reads data in the database
-                \item \emph{MONGO\_READ\_PASSWORD}: Password for the user with read role
+                
+                \item \emph{MONGO\_INITDB\_ROOT\_USERNAME}: Username of the database administrator in MongoDB.
+                \item \emph{MONGO\_INITDB\_ROOT\_PASSWORD}: Password for the MongoDB administrator.
+                
+                \item \emph{DB\_NAME}: Name of the database to be created in MongoDB.
+                
+                \item \emph{MONGO\_WRITE\_USERNAME}: Username of non root user who can only write data to the database.
+                \item \emph{MONGO\_WRITE\_PASSWORD}: Password for user with write role.
+                \item \emph{MONGO\_READ\_USERNAME}: Username of non root user who only reads data in the database.
+                \item \emph{MONGO\_READ\_PASSWORD}: Password for the user with read role.
+                
                 \item \emph{AMOUNT\_BOOKS}: Number of books that are extracted from the API. It does not represent the final number found in the associated collection in MongoDB.
                 \item \emph{USER\_AGENT}: Identification credentials for the OpenLibrary API (project name, email). It is not a token or key for the API.
+                
                 \item \emph{FLASK\_SECRET\_KEY}: Secret key used by Flask for encryption and session management.
-                \item \emph{DEBUG\_MODE}: Mode in which Flask applications run, whether in debug mode or production mode
-                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served
-                \item \emph{EMAIL\_ID}: Email used to generate certificates generated from CertBot
+                \item \emph{DEBUG\_MODE}: Mode in which Flask applications run, whether in debug mode or production mode.
+                
+                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served.
+        
+                \item \emph{EMAIL\_ID}: Email used to generate certificates generated from CertBot.
             \end{itemize}
         }
 
-        \subsection{Execution File \emph{Makefile}}
+        \subsection{Execution File \emph{Makefile}}\label{sec:ConfExec}
         {
             The \verb*|Makefile| file contains commands that execute the different 
             services contained in the \verb*|docker-compose.yml| files depending on 
@@ -135,5 +145,39 @@
     \newpage
 
     \section{Deployment Stage}
+    {
+        In order to carry out the deployment of the service, you must first configure the 
+        environment variables in a \verb*|.evn_production| file, for this purpose it 
+        is suggested to use:
+
+        \begin{verbatim}
+            cp .env_example .env_production
+        \end{verbatim}
+
+        In which, it is necessary to modify and change each one of the values of the 
+        environment variables following the suggestions and references in the sections 
+        \ref{sec:ConfEnv} and \ref{sec:ConfExec}.
+
+        With this, it makes use of the commands in \verb*|Makefile|, where the first 
+        one is the one related to the generation of SSL certificates, it makes use of:
+
+        \begin{verbatim}
+            make DOMAIN_NAME=your_domain ssl_certificate
+        \end{verbatim}
+
+        Where the \emph{your\_domain} must match the value of DOMAIN\_NAME in the environment 
+        variables file. Finally, the web service is deployed by means of:
+
+        \begin{verbatim}
+            make ENV=production deploy
+        \end{verbatim}
+
+        In case any component has been updated, changed or stopped working, the following 
+        is used:
+
+        \begin{verbatim}
+            make ENV=production deploy_restart
+        \end{verbatim}
+    }
 
 \end{document}
