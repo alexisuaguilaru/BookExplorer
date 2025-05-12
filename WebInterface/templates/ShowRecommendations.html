@@ -1,10 +1,16 @@
 {% extends "__Base.html" %}
 
 {% block main %}
-        {% for recommended_book in Recommendations %}
-        <div>
-            <h3>{{ recommended_book.title }}</h3>
-            <p><b>Authors</b>: {{ recommended_book.author_name }}</p>
-        </div>
-        {% endfor %}
+        <div class="present-recommendations">
+            {% for recommended_book in Recommendations %}
+            <div class="recommendation">
+                <h3 class="title-book">{{ recommended_book.title }}</h3>
+                <div class="cover-book">
+                    <img src='{{ recommended_book.image }}'>
+                </div>
+                <p class="author-book">{{ recommended_book.author_name[0] }}</p>
+                <!-- <p class="isbn-book">ISBN : {{ recommended_book.isbn }}</p> -->
+            </div>
+            {% endfor %}
+        </div> 
 {% endblock %}

@@ -74,8 +74,6 @@ services:
         depends_on:
             BooksDatabase:
                 condition: service_healthy
-            DataExtraction:
-                condition: service_completed_successfully
         command: sh -c "sleep 10 && python -m RecommenderSystem"
 
 volumes:

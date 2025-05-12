@@ -1,0 +1,10 @@
+FROM node:23.11-slim
+
+WORKDIR /WebInterface
+
+COPY ./WebInterface/*.json ./WebInterface/tailwind.config.js ./
+COPY ./WebInterface/static/scss ./static/scss
+
+RUN npm install
+
+RUN chmod -R 750 ./

@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+div.center-button {
+    @apply absolute top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 ; 
+}
+
+a.button-start {
+  @apply inline-block px-4 py-4 bg-indigo-500 text-white text-center text-4xl rounded-lg shadow-md hover:bg-indigo-900 transition;
+}

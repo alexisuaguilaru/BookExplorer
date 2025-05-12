@@ -1,11 +1,13 @@
 *.ipynb
 __pycache__
-.env_dev
-.env_prod
+.env*
+
+*node_modules*
 
 to-do*
 BooksDatabase/Data*
 Proxy/ssl/*
+WebInterface/static/css*
 
 *.aux
 *.bbl

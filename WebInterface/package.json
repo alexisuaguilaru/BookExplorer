@@ -1,0 +1,21 @@
+{
+    "name": "webinterface",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build:tailwind": "npx tailwindcss -i ./static/scss/styles.scss -o ./static/css/output.css",
+        "dev": "npm run build:tailwind -- --watch --poll",
+        "build": "npm run build:tailwind"
+    },
+    "dependencies": {
+        "tailwindcss": "^3.3.0",
+        "sass": "^1.62.1",
+        "postcss": "^8.4.21",
+        "autoprefixer": "^10.4.14",
+        "concurrently": "^9.1.2"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
