@@ -12,6 +12,7 @@ app.config.update(
     SESSION_COOKIE_SAMESITE = 'Lax',  
     PERMANENT_SESSION_LIFETIME = 3600, 
 )
+app.config["APPLICATION_ROOT"] = "/books-explorer/"
 csrf = CSRFProtect(app)
 
 @app.route('/')
@@ -23,7 +24,7 @@ def HomePage():
     session.clear()
     return render_template("HomePage.html",**ContextVariables)
 
-@app.route('/BookExplorer',methods=['GET','POST'])
+@app.route('/BookExplorer/',methods=['GET','POST'])
 def BookExplorer():
     form_selection = BookSelectionForm()
     ContextVariables = {
@@ -48,9 +49,9 @@ def BookExplorer():
             return render_template("BookExplorer.html", **ContextVariables,Recommendations=recommended_books)
 
         else:
-            return redirect(url_for("ShowRecommendations"))
+            return redirect(url_for("ShowRecommendations",_external=False))
         
-@app.route('/Recommendations')
+@app.route('/Recommendations/')
 def ShowRecommendations():
     ContextVariables = {
         'Title':'Books Recommendations'
@@ -58,6 +59,14 @@ def ShowRecommendations():
 
     recommended_books = RecommendedBooks(session['last_selection'],False)
     return render_template("ShowRecommendations.html",**ContextVariables,Recommendations=recommended_books)
+
+@app.after_request
+def rewrite_urls(response):
+    if response.content_type.startswith("text/html"):
+        contenido = response.get_data(as_text=True)
+        contenido = contenido.replace("http://localhost:5000", "/books-explorer")
+        response.set_data(contenido)
+    return response
 
 if __name__ == '__main__':
     if (debug_mode:=int(os.getenv("DEBUG_MODE"))):

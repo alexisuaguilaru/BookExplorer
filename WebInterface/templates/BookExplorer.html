@@ -1,7 +1,7 @@
 {% extends "__Base.html" %}
 
 {% block main %}
-    <form method="POST" action="/BookExplorer">
+    <form method="POST" action="/BookExplorer/">
         {{ FormSelections.hidden_tag() }}
         <div class="present-options">
             {% for recommended_book in Recommendations %}
