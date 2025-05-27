@@ -82,5 +82,5 @@ volumes:
 
 networks:
     books_explorer_internal:
-        internal: true
+        external: true
     books_explorer_external:
