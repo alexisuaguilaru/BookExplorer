@@ -9,14 +9,21 @@ from typing import Iterable , Any
 Fields = ['key','title','author_name','subject','isbn','publish_date','publish_place','publisher']
 def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
     """
-        Function for obtaining clean books from a 
-        subject list.
+    Function for obtaining clean books from a 
+    subject list.
+
+    Parameters
+    ----------    
+    Subjects : list[str]
+        List of subjects
         
-        -- Subjects : list[str] :: List of subjects
+    AmountBooks : int
+        Amount of books to get
 
-        -- AmountBooks : int :: Amount of books to get
-
-        Yield a book 
+    Returns
+    -------
+    book : dict
+        Representation of a book as a dictionary
     """
     for batch_books in GetBooksData(Subjects,AmountBooks):
         for book in batch_books:
@@ -25,13 +32,20 @@ def GetBook(Subjects:list[str],AmountBooks:int) -> Iterable[dict[str,Any]]:
 
 def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,str]]]:
     """
-        Function for getting data of books from 
-        a list of subjects
+    Function for getting data of books from 
+    a list of subjects
 
-        -- Subjects : list[str] :: List of subjects
+    Parameters
+    ----------
+    Subjects : list[str]
+        List of subjects
+    
+    AmountBooks : int
+        Amount of books to get
 
-        -- AmountBooks : int :: Amount of books to get
-
+    Returns
+    -------
+    list[dict]
         Yield a list of books with their data
     """
     for subject in Subjects:
@@ -40,14 +54,20 @@ def GetBooksData(Subjects:list[str],AmountBooks:int) -> Iterable[list[tuple[str,
 api_url_search = "https://openlibrary.org/search.json?fields=" + ",".join(Fields)
 def GetTitlesBySubject(Subject:str,AmountBooks:int) -> list[dict]:
     """
-        Function for getting data of books by subject
+    Function for getting data of books by subject
 
-        -- Subject : str :: Subject of the books
+    Parameters
+    ----------
+    Subject : str
+        Subject of the books
+    
+    AmountBooks : int
+        Limit of books from which data is extracted
 
-        -- AmountBooks : int :: Limit of books from which 
-        data is extracted
-
-        Return a list of books with their data
+    Returns
+    -------
+    list[dict]
+        List of books with their data
     """
     identification = {
                       "User-Agent":os.getenv("USER_AGENT")

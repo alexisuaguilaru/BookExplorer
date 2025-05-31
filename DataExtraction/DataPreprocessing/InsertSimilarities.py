@@ -7,10 +7,17 @@ from .VectorizeBooks import GetTermFrequencyMatrix
 
 def InsertSimilaritiesIntoCollection(BooksCollection:object) -> None:
     """
-        Function for precomputing and inserting 
-        similar books in each book
+    Function for precomputing and inserting 
+    similar books in each book
 
-        -- BooksCollection : object :: MongoDB collection where the books belong
+    Parameters
+    ----------
+    BooksCollection : object
+        MongoDB collection where the books belong
+
+    Returns
+    -------
+    `None`
     """
     data_books = list(BooksCollection.find({}))
 
