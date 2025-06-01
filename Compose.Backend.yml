@@ -70,7 +70,6 @@ services:
         image: recommend-system
         networks:
             - books_explorer_internal
-            # - default
         ports:
             - "8013:8013"
         depends_on:

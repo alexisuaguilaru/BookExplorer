@@ -223,8 +223,7 @@
         \end{verbatim}
 
         To test that these new features work properly, it is suggested to raise the API 
-        locally, to do this first add the network \verb*|default| to the \verb*|RecommenderSystem| 
-        service found in \verb*|Compose.Backend.yml| to generate requests to the API locally.\\
+        locally to generate requests to the API locally.\\
 
         For testing the integration of the new changes with the code base, it is suggested 
         that running the tests using the following command in the root of the project:
@@ -238,9 +237,8 @@
 
     \section{Testing}
     {
-        First it is suggested to raise the microservice following what is mentioned in \ref{sec:Base}, 
-        in addition to add the network \verb*|default| to the \verb*|RecommenderSystem| service found 
-        in \verb*|Compose.Backend.yml| to generate requests to the API locally.\\
+        First it is suggested to raise the microservice following what is mentioned in \ref{sec:Base} 
+        to generate requests to the API locally.\\
 
         Once the API has been up, the tests of both the API itself and the different tests of the 
         service that consumes the API that has been up have to be executed. For the first ones the 

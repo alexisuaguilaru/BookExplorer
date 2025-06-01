@@ -34,35 +34,35 @@ First, the books obtained through the [OpenLibrary API](https://openlibrary.org/
 
 Having the similar books of a book, Flask is used to create an API that allows, by means of GET requests, to obtain the information of a book as well as the suggestions or recommendations of other books. This API communicates with the web interface, built with [Wagtail](https://wagtail.org/get-started/), to generate the interaction with the user.
 
-## Installation and Usage Instructions
-The following procedure is to execute a basic example of the operation of the system without serving to the Internet. To perform an execution or deploy refer to [Usage Manual](./Documentation/UsageManual.pdf) 
+## Installation Instructions
+The following procedure is to execute a basic example of the operation of the microservice without serving to the Internet. To perform an execution or deploy refer to [Usage Manual](./Documentation/UsageManual.pdf) 
 
 First it is necessary to clone this repository:
 ```bash
 git clone https://github.com/alexisuaguilaru/BookExplorer.git
 ```
 
-Then, it is necessary to generate a self-signed certificate with localhost domain, this is done with:
+Then, it is necessary to create a network with the next command:
 ```bash
-make ssl_certificate
+docker network create books_explorer_internal
 ```
 
 Next, build and run the multi-container for the different microservices for the service using:
 ```bash
-make dev
+make deploy
 ```
 In case it has been done previously, use:
 ```bash
-make dev_data_extraction
+make deploy_restart
 ```
 
-Finally, to interact with the web interface, go to:
+Finally, to generate random recommendations with the API, go to:
 ```bash
-http://127.0.0.1
+http://127.0.0.1:8013/recommendations
 ```
 Or go to:
 ```bash
-https://localhost
+http://localhost:8013/recommendations
 ```
 
 For stopping the service, use:
@@ -70,11 +70,23 @@ For stopping the service, use:
 make down
 ```
 
+## Usage Instructions
+In order to make use of the API, two types of GET requests can be generated, either to obtain recommendations or to obtain information about an available book, using the following requests:
+* Obtain book recommendations or suggestions. Where ISBN_CODE can be empty '' to obtain random recommendations or be a valid ISBN code or one that exists in the database:
+```bash
+GET http://localhost:8013/recommendations?isbn=ISBN_CODE
+``` 
+* Obtain the information of a book. Where ISBN_CODE must be a valid ISBN code or exist in the database.:
+```bash
+GET http://localhost:8013/information_book?isbn=ISBN_CODE
+```
+
 ## Technologies
 * APIs
 * [Python 3.12.5](https://www.python.org/)
   * [Flask](https://flask.palletsprojects.com/en/stable/)
   * [Scikit Learn](https://scikit-learn.org/stable/)
+  * [Pytest](https://docs.pytest.org/en/stable/)
 * [MongoDB](https://www.mongodb.com/)
 * [Docker](https://www.docker.com/)
 * [AWS](https://aws.amazon.com/)
