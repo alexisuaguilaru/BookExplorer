@@ -92,6 +92,28 @@ GET http://localhost:8013/information_book?isbn=ISBN_CODE
 * [AWS](https://aws.amazon.com/)
   * EC2 Instances for testing
 
+## Dataflow Diagram
+```mermaid
+flowchart TD
+    subgraph int [Internet];
+    OL[OpenLibrary API];
+    end;
+
+    subgraph doc [Docker API];
+    OL-->|GET Books|DE;
+    DE[DataExtraction];
+    DE-->|Load Processed Books|MDB;
+    MDB[BooksDatabase];
+    MDB-->|Connection to Database|API;
+    API[RecommenderSystem];
+    end;
+
+    subgraph other [External Network];
+    API-->|GET Books from API|OS;
+    OS[OtherService];
+    end;
+```
+
 ## Results 
 The following screenshots show the operation of the API displayed in the Wagtail web interface.
 
