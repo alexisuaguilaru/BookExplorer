@@ -92,7 +92,7 @@ GET http://localhost:8013/information_book?isbn=ISBN_CODE
 * [AWS](https://aws.amazon.com/)
   * EC2 Instances for testing
 
-## Dataflow Diagram
+## Architecture (Dataflow) Diagram
 ```mermaid
 flowchart TD
     subgraph int [Internet];
@@ -110,7 +110,7 @@ flowchart TD
 
     subgraph other [External Network];
     API-->|GET Books from API|OS;
-    OS[OtherService];
+    OS[OtherService/Wagtail Web Interface];
     end;
 ```
 
@@ -122,3 +122,8 @@ The following screenshots show the operation of the API displayed in the Wagtail
 
 * Books that are suggested to the user after exploring new titles:
 ![](./Resources/show_recommendations.png)
+
+## Conclusions
+Initially this project was planned to be done with [Django](https://www.djangoproject.com/), but as the ideas around the project were refined, it was realized that it was not going to take full advantage of the functionality it offers; therefore it was decided to use [Flask](https://flask.palletsprojects.com/en/stable/) for the creation of this microservice or API. In addition, the final objective of this project is to create an API to be used in other larger projects (such as the web interface and continuation of this project), this is facilitated by using Flask, which has a simpler interface and functionalities but equally robust as those offered by Django for the creation of APIs.
+
+Similarly, it was planned to use Flask to create the web interface but for simplicity reasons and to take better advantage of Django's functionalities, it was decided to discard the implementation of the web interface with Flask for Django. That is, as the latter has all the implementations and modules necessary for the creation of a web service, it becomes more preferable for it to be the one that consumes the API created in Flask and formats the response as shown in [Results](#results). 
