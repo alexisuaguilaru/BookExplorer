@@ -50,7 +50,7 @@
             To start developing a feature, test a functionality or module, or 
             deploy the service, it is required to clone the repository, for 
             this purpose it is used:
-            
+
             \begin{verbatim}
             git clone https://github.com/alexisuaguilaru/BookExplorer.git 
             \end{verbatim}
@@ -63,17 +63,16 @@
 
         \subsection{Docker Compose}
         {
-            The service is divided into three files \verb*|docker-compose.yml|, 
-            where each one contains the different microservices according to the 
-            functionality it performs within the service. The files contain the 
+            The microservice is divided into three docker-services, 
+            where each one contains the different functionalities and 
+            code according to what it performs within the microservice. 
+            The docker-compose (\verb*|Compose.Backend,yml|) contain the 
             following microservices:
 
             \begin{itemize}[label=$\bullet$]
-                \item \textbf{Backend}: MongoDB database [BooksDatabase], Data extraction 
-                from the API [DataExtraction] and API of the main microservice [SystemRecommender].
-                \item \textbf{Frontend}: CSS styles builder [NodeJS] and web interface [WebInterface].
-                \item \textbf{Proxy}: Reverse proxy based on nginx [Proxy] and automation of SSL 
-                certificate acquisition [Certbot].
+                \item MongoDB database [BooksDatabase]
+                \item Data extraction from the API [DataExtraction]
+                \item API of the main microservice [SystemRecommender]
             \end{itemize}
         }
 
@@ -90,34 +89,30 @@
                 \item \emph{MONGO\_INITDB\_ROOT\_USERNAME}: Username of the database administrator in MongoDB.
                 \item \emph{MONGO\_INITDB\_ROOT\_PASSWORD}: Password for the MongoDB administrator.
                 
-                \item \emph{DB\_NAME}: Name of the database to be created in MongoDB.
-                
                 \item \emph{MONGO\_WRITE\_USERNAME}: Username of non root user who can only write data to the database.
                 \item \emph{MONGO\_WRITE\_PASSWORD}: Password for user with write role.
                 \item \emph{MONGO\_READ\_USERNAME}: Username of non root user who only reads data in the database.
                 \item \emph{MONGO\_READ\_PASSWORD}: Password for the user with read role.
+                
+                \item \emph{DB\_NAME}: Name of the database to be created in MongoDB.
                 
                 \item \emph{AMOUNT\_BOOKS}: Number of books that are extracted from the API. It does not represent the final number found in the associated collection in MongoDB.
                 \item \emph{USER\_AGENT}: Identification credentials for the OpenLibrary API (project name, email). It is not a token or key for the API.
                 
                 \item \emph{FLASK\_SECRET\_KEY}: Secret key used by Flask for encryption and session management.
                 \item \emph{DEBUG\_MODE}: Mode in which Flask applications run, whether in debug mode or production mode.
-                
-                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served.
-        
-                \item \emph{EMAIL\_ID}: Email used to generate certificates generated from CertBot.
             \end{itemize}
         }
 
         \subsection{Execution File \emph{Makefile}}\label{sec:ConfExec}
         {
             The \verb*|Makefile| file contains commands that execute the different 
-            services contained in the \verb*|docker-compose.yml| files depending on 
+            services contained in the \verb*|Compose.Backend.yml| file depending on 
             whether it is the first time it is executed or not. It contains the 
             following variables to configure:
 
             \begin{itemize}[label=$\bullet$]
-                \item \emph{DOMAIN\_NAME}: Name of the domain where the service will be served and from where the self-signed certificates are generated.
+                \item \emph{LENGTH}: Controls the length of the key, preferably greater than $12$ characters.
                 \item \emph{ENV}: Environment under which the service is being executed, depending on whether it is for development, testing or deployment.
             \end{itemize}
 
@@ -128,27 +123,47 @@
             make secret_key LENGTH=integer
             \end{verbatim}
 
-            Where \emph{LENGTH} controls the length of the key, preferably greater 
-            than $12$ characters.
-        }
+            For showing the different commands contained in \verb*|Makefile|, use the 
+            following command:
 
+            \begin{verbatim}
+            make help
+            \end{verbatim}
+        }
     }
 
     \newpage
 
-    \section{Development Stage}
-
-    \newpage
-
-    \section{Testing Stage}
-
-    \newpage
-
-    \section{Deployment Stage}
+    \section{Response to a Request}\label{sec:Request}
     {
-        In order to carry out the deployment of the service, you must first configure the 
-        environment variables in a \verb*|.evn_production| file, for this purpose it 
-        is suggested to use:
+        Regardless of the environment from which the request is being generated, whether locally 
+        (http://localhost:8013) or in a network of Docker containers (http://RecommenderSystem:8013), 
+        two types of requests can be generated:
+
+        \begin{itemize}
+            \item Request to obtain book recommendations or suggestions based on another book (its ISBN code):
+            \begin{verbatim}
+                GET API_URI/recommendations?isbn=ISBN_CODE
+            \end{verbatim}
+            Where \emph{ISBN\_CODE} can be empty (\verb*|''|) to obtain random recommendations or be a valid 
+            ISBN code or one that exists in the database.
+
+            \item Request to obtain the information of a book based on its ISBN code:
+            \begin{verbatim}
+                GET API_URI/information_book?isbn=ISBN_CODE
+            \end{verbatim}
+            Where \emph{ISBN\_CODE} must be a valid ISBN code or exist in the database.
+        \end{itemize}
+    }
+
+    \newpage
+
+    \section{Base Configuration}\label{sec:Base}
+    {
+        For the implementation of a new feature (development), unit or integration tests 
+        (testing) or deployment of the microservice (deploy), it is necessary to first 
+        configure the environment variables in the \verb*|.evn_stage| file, for this 
+        purpose it is suggested to use the following command:
 
         \begin{verbatim}
             cp .env_example .env_production
@@ -156,17 +171,20 @@
 
         In which, it is necessary to modify and change each one of the values of the 
         environment variables following the suggestions and references in the sections 
-        \ref{sec:ConfEnv} and \ref{sec:ConfExec}.
+        \ref{sec:ConfEnv} and \ref{sec:ConfExec}.\\
 
-        With this, it makes use of the commands in \verb*|Makefile|, where the first 
-        one is the one related to the generation of SSL certificates, it makes use of:
+        Before executing the \verb*|Compose.Backend.yml| file, it is necessary to create 
+        an additional network that allows the communication between the API (running in 
+        Flask) with the different Docker containers and services; for this, both containers 
+        must belong to the same network, which is created using the following command:
 
         \begin{verbatim}
-            make DOMAIN_NAME=your_domain ssl_certificate
+            docker network create books_explorer_internal
         \end{verbatim}
 
-        Where the \emph{your\_domain} must match the value of DOMAIN\_NAME in the environment 
-        variables file. Finally, the web service is deployed by means of:
+        Once the network is created, it can be executed the Docker-Compose by means of the 
+        commands in \verb*|Makefile| and start response requests to the API. This is done 
+        with the following command:
 
         \begin{verbatim}
             make ENV=production deploy
@@ -178,6 +196,73 @@
         \begin{verbatim}
             make ENV=production deploy_restart
         \end{verbatim}
+    }
+
+    \newpage
+
+    \section{Development}
+    {
+        Following the guidelines established for the development and implementation 
+        of new features in the development team, that is, the nomenclature for naming 
+        branches and commits in the \href{https://git-scm.com/}{Git} protocol, the 
+        following is done for the proper development and workflow. In addition to 
+        the above, it is necessary to do what is mentioned in \ref{sec:Base}.\\
+    
+        It is suggested the creation of a virtual environment in Python using 
+        \href{https://docs.python.org/3/library/venv.html}{venv}, in each of 
+        the modules developed in Python have their own set of libraries to 
+        install; therefore, depending on the feature to implement, the following 
+        commands are executed:
+
+        \begin{verbatim}
+            python3 -m venv path_virutal_environment 
+            source path_virutal_environment\bin\activate
+            cd Module
+            pip install -r requirements_Module.txt
+            pip install pytest==8.3.5
+        \end{verbatim}
+
+        To test that these new features work properly, it is suggested to raise the API 
+        locally to generate requests to the API locally.\\
+
+        For testing the integration of the new changes with the code base, it is suggested 
+        that running the tests using the following command in the root of the project:
+
+        \begin{verbatim}
+            pytest
+        \end{verbatim}
+    }
+
+    \newpage
+
+    \section{Testing}
+    {
+        First it is suggested to raise the microservice following what is mentioned in \ref{sec:Base} 
+        to generate requests to the API locally.\\
+
+        Once the API has been up, the tests of both the API itself and the different tests of the 
+        service that consumes the API that has been up have to be executed. For the first ones the 
+        following commands are executed in the root of the project:
+
+        \begin{verbatim}
+            pip install pytest==8.3.5
+            pytest
+        \end{verbatim}
+
+        Additionally, it is suggested to add more tests in the folder \verb*|Test/| following the guidelines 
+        of \href{https://docs.pytest.org/en/stable/}{Pytest}, this to cover particular cases and applications. 
+        The tests available are only to validate the extraction, transformation and loading of the data 
+        from the books to the database.
+    }
+
+    \newpage
+
+    \section{Deployment}
+    {
+        In addition to doing what is mentioned in \ref{sec:Base} to build and up the API properly, 
+        the microservice/API network, \verb*|books_explorer_internal| network has to be added to 
+        the different Docker containers or services that will generate requests to the API created 
+        by means of the request structures mentioned in \ref{sec:Request}.
     }
 
 \end{document}

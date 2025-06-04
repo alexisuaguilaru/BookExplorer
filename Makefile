@@ -6,47 +6,26 @@ DOCKER := docker-compose -p books-explorer
 DOCKER_COMPOSE :=  $(DOCKER) --env-file .env_
 
 BACKEND := Compose.Backend.yml
-FRONTEND := Compose.Frontend.yml
-PROXY := Compose.Proxy.yml
 
-UP := up -d --build
+UP_BUILD := up -d --build
+UP := up -d
 
-.PHONY: ssl_certificate secret_key pre_up pre_up_data_extraction dev dev_data_extraction deploy deploy_restart down down_volume
- 
-ssl_certificate:
-	mkdir -p Proxy/ssl/live/$(DOMAIN_NAME) && \
-	cd Proxy/ssl/live/$(DOMAIN_NAME) && \
-	openssl req -x509 -nodes -days 31 -newkey rsa:2048 \
-		-keyout privkey.pem \
-		-out fullchain.pem \
-		-subj "/CN=$(DOMAIN_NAME)" \
-		-addext "subjectAltName=DNS:${DOMAIN_NAME}"
+.PHONY: help secret_key deploy deploy_restart down down_volume
 
-secret_key:
+help:
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+secret_key: ## Generate a Secrete Key
 	openssl rand -base64 $(LENGTH) | tr -dc 'A-Za-z0-9' | head -c $(LENGTH) ; echo
 
-pre_up:
-	$(DOCKER_COMPOSE)$(ENV) --file $(BACKEND) $(UP)
-	$(DOCKER_COMPOSE)$(ENV) --file $(FRONTEND) $(UP)
+deploy: ## Deploy API/Microservice 
+	$(DOCKER_COMPOSE)$(ENV) --file $(BACKEND) $(UP_BUILD)
 
-pre_up_data_extraction:
+deploy_restart: ## Restart API/Microservice
 	$(DOCKER_COMPOSE)$(ENV) --file $(BACKEND) $(UP) BooksDatabase RecommenderSystem
-	$(DOCKER_COMPOSE)$(ENV) --file $(FRONTEND) $(UP)
 
-dev: pre_up
-	$(DOCKER_COMPOSE)$(ENV) --file $(PROXY) $(UP) Proxy
+down: ## Stop API/Microservice without delete volumes
+	$(DOCKER) down
 
-dev_data_extraction: pre_up_data_extraction
-	$(DOCKER_COMPOSE)$(ENV) --file $(PROXY) $(UP) Proxy
-
-deploy: pre_up
-	$(DOCKER_COMPOSE)$(ENV) --file $(PROXY) $(UP)
-
-deploy_restart: pre_up_data_extraction
-	$(DOCKER_COMPOSE)$(ENV) --file $(PROXY) $(UP) Proxy
-
-down:
-	docker compose -p books-explorer down
-
-down_volume:
-	docker compose -p books-explorer down -v
+down_volume: ## Stop API/Microservice and delete volumes
+	$(DOCKER) down -v

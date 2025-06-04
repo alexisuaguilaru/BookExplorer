@@ -1,16 +1,22 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from numpy import ndarray
+import numpy as np
 
-def GetTermFrequencyMatrix(DataBooks:list[dict]) -> ndarray:
+def GetTermFrequencyMatrix(DataBooks:list[dict]) -> np.ndarray:
     """
-        Function for obtaining TF-IDF matrix 
-        given a list of titles and subjects relative 
-        to each book.
+    Function for obtaining TF-IDF matrix 
+    given a list of titles and subjects relative 
+    to each book.
 
-        -- DataBooks : list[dict] :: MongoDB collection with the data books
+    Parameters
+    ----------
+    DataBooks : list[dict]
+        MongoDB collection with the data books
 
-        Return TF-IDF matrix 
+    Returns
+    -------
+    TitleSubjectsVectorized : np.ndarray
+        TF-IDF matrix 
     """
     TitleSubjectsData_Books = [' '.join(map(str.lower,[book['title']]+book['subject'])) for book in DataBooks]
     TitleSubjectsVectorizer = TfidfVectorizer(stop_words=None)

@@ -10,10 +10,17 @@ subjects = ['fiction','fantasy','historical_fiction',
             'short_stories','thriller','young_adult_fiction']
 def InsertBooksIntoCollection(BooksCollection:object) -> None:
     """
-        Function for inserting books into 
-        MongoDB collection
+    Function for inserting books into 
+    MongoDB collection
 
-        -- BooksCollection : object :: MongoDB collection where the books are inserted
+    Parameters
+    ----------
+    BooksCollection : object
+        MongoDB collection where the books are inserted
+
+    Returns
+    -------
+    `None`
     """
     for book in GetBook(subjects,int(os.getenv("AMOUNT_BOOKS"))):
         try:

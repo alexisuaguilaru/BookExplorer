@@ -1,6 +1,10 @@
+.vscode
+
 *.ipynb
 __pycache__
 .env*
+__*
+.pytest*
 
 *node_modules*
 

@@ -1,4 +1,20 @@
 def GetRecommendations(ISBN:str,BooksCollection:object) -> list[str]:
+    """
+    Function for getting recommendations of a book
+
+    Parameters
+    ----------
+    ISBN : str
+        Book's ISBN code which its information is gathered
+
+    BooksCollection : object
+        MongoDB collection where the books belong
+
+    Returns
+    -------
+    list[str]
+        Returns a list of ISBN books recommendations
+    """
     if ISBN:
         return list(BooksCollection.find_one({"isbn":ISBN})["similar_books"])
     else:
